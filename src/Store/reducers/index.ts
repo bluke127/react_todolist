@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-import { reducer as numReducer } from "./number";
-const rootReducer = combineReducers({ numReducer });
+import { numberReducer } from "./number";
+const rootReducer = combineReducers({ numberReducer });
 export default rootReducer;
