@@ -1,5 +1,5 @@
 interface ReducerType {
-  numberReducer:number
+  MediaQueryReducer:string
 }
 interface storeType {
   number:number

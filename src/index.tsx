@@ -31,8 +31,8 @@ const store = configureStore({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
-    children: [{ index: true, element: <Todo />, path: "todo" }],
+    element: <App />,
+    children: [{ index: true, element: <Todo />, path: "", }],
   },
 ]);
 root.render(

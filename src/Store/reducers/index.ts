@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-import { numberReducer } from "./number";
-const rootReducer = combineReducers({ numberReducer });
+import { MediaQueryReducer } from "./mediaQuery";
+const rootReducer = combineReducers({ MediaQueryReducer });
 export default rootReducer;

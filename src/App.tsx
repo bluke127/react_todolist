@@ -1,23 +1,36 @@
 import Test01 from "@/Pages/Test01";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnyAction, Dispatch } from "redux";
-import { numberDecrease, numberIncrease } from './Store/reducers/number';
+import { SetMediaQuery } from "./Store/reducers/mediaQuery";
+
+import Layout from "@/Layout/index";
+import { useMediaQuery } from "react-responsive";
+import { redirect } from "react-router-dom";
 
 function App() {
-  const dispatch :Dispatch<AnyAction>= useDispatch();
-  const selector = useSelector((state:ReducerType)=>state.numberReducer);
-  const increase = useCallback(() => {
-    dispatch(numberIncrease(1));
+  const dispatch: Dispatch<AnyAction> = useDispatch();
 
-  }, []);
-  const decrease = useCallback(() => {
-    dispatch(numberDecrease(1));
-
+  const isDesktop: boolean = useMediaQuery({
+    query: "(min-width:1024px)",
+  });
+  const isTablet: boolean = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile: boolean = useMediaQuery({
+    query: "(max-width:767px)",
+  });
+  useEffect(() => {
+    dispatch(
+      SetMediaQuery(isMobile ? "Mobile" : isTablet ? "Tablet" : "Desktop")
+    );
+  }, [isDesktop, isTablet, isMobile]);
+  useEffect(() => {
+    redirect('/todo')
   }, []);
   return (
     <div className="App">
-      Route
+      <Layout />
     </div>
   );
 }
