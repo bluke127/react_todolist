@@ -17,10 +17,7 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <Test01 />
-      {selector}
-      <button onClick={increase}>+++</button>
-      <button onClick={decrease}>---</button>
+      Route
     </div>
   );
 }
