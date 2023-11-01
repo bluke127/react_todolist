@@ -6,7 +6,8 @@
       "@/Hooks/*": ["src/Hooks/*"],
       "@/Layout/*": ["src/Layout/*"],
       "@/Pages/*": ["src/Pages/*"],
-      "@/Store/*": ["src/Store/*"]
+      "@/Store/*": ["src/Store/*"],
+      "@/Fonts/*": ["src/Assets/Fonts/*"]
     }
   }
 }

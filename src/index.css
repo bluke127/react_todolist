@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.test {
+  @apply bg-red-700;
+}
+@font-face {
+  font-family: "Dovemayo_gothic";
+  font-weight: normal;
+  src: url("./Assets/Fonts/Dovemayo_gothic.ttf") format("truetype");
+}
+body {
+  font-family: "Dovemayo_gothic";
+}

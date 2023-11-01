@@ -11,8 +11,9 @@ import {
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import rootReducer from "@/Store/reducers";
-import Layout from "@/Layout/index";
 import Todo from "./Pages/Todo";
+import ComponentTest from "./Pages/ComponentTest";
+import "./index.css"
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -32,7 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [{ index: true, element: <Todo />, path: "", }],
+    children: [
+      { index: true, element: <Todo />, path: "" },
+      { element: <ComponentTest />, path: "/component" },
+    ],
   },
 ]);
 root.render(

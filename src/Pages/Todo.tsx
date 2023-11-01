@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
 
-export  function Todo() {
+export function Todo() {
   return (
-    <div>Todo</div>
-  )
+    <div className="red w-[384px] h-[450px] rounded border-solid border-2 border-indigo-600">
+      <ul>
+        <li>ddd</li>
+      </ul>
+    </div>
+  );
 }
 
-export default Todo
+export default Todo;
