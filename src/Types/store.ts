@@ -1,6 +1,10 @@
 interface ReducerType {
-  MediaQueryReducer:string
+  MediaQueryReducer: string;
+  UtilsReducer: UtilsReducer;
+}
+interface UtilsReducer {
+  FOCUS_TARGET: unknown;
 }
 interface storeType {
-  number:number
+  number: number;
 }

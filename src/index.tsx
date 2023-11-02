@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(
 
 const store = configureStore({
   reducer: rootReducer, // combineReducers로 리듀서를 묶은 리덕스 모듈 파일
-  // middleware: [ReduxThunk, logger], // 사용할 미들웨어들을 나열
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }), // 사용할 미들웨어들을 나열
   devTools: true, // 기본은 true로 설정되어있다. 개발자 도구의 사용 여부를 정한다.
   // preloadedState: {
   //   loading: {

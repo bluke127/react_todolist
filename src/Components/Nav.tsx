@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import Input from "./Input";
 
 function Nav() {
   const mediaQuery = useSelector(
@@ -10,6 +11,7 @@ function Nav() {
       <div>mediaQuery : {mediaQuery}</div>
       <div>Nav</div>
     </>
+
   );
 }
 
