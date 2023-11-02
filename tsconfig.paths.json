@@ -7,7 +7,8 @@
       "@/Layout/*": ["src/Layout/*"],
       "@/Pages/*": ["src/Pages/*"],
       "@/Store/*": ["src/Store/*"],
-      "@/Fonts/*": ["src/Assets/Fonts/*"]
+      "@/Fonts/*": ["src/Assets/Fonts/*"],
+      "@/Constant/*": ["src/Constant/*"]
     }
   }
 }
