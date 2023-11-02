@@ -11,7 +11,7 @@ type PropType = {
   dateFormat?: string;
   minDate?: null | Date;
   maxDate?: null | Date;
-  shouldCloseOnSelect?: boolean;
+  alwaysOpen?: boolean;
 };
 function DatePicker({
   onChange,
@@ -19,29 +19,34 @@ function DatePicker({
   maxDate,
   selectedDate,
   setSelectedDate,
-  shouldCloseOnSelect = true,
   dateFormat = DATE_FORMAT as string,
+  alwaysOpen = false,
 }: PropType) {
   const handleOnChangeFunc = (d: Date, e: SyntheticEvent<any, Event>) => {
     // console.log(moment(d).format(DATE_FORMAT), new Date(moment(d).format(DATE_FORMAT)))
     onChange
       ? onChange(d, e)
       : setSelectedDate(() => {
-          return moment(d).format(U_DATE_FORMAT)
+          return moment(d).format(U_DATE_FORMAT);
         });
   };
+  const a = (e) => {
+    e.preventDefault();
+    alert("ss");
+  };
   return (
-    <>
+    <div>
       <_DatePicker
         locale={ko}
+        open={alwaysOpen||undefined}
         dateFormat={dateFormat} // 날짜 형태
-        shouldCloseOnSelect={shouldCloseOnSelect} // 날짜를 선택하면 datepicker가 자동으로 닫힘
+        shouldCloseOnSelect={!alwaysOpen} // 날짜를 선택하면 datepicker가 자동으로 닫힘
         minDate={minDate} // minDate 이전 날짜 선택 불가
         maxDate={maxDate} // maxDate 이후 날짜 선택 불가
         selected={new Date(selectedDate)}
         onChange={handleOnChangeFunc}
       />
-    </>
+    </div>
   );
 }
 

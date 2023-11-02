@@ -39,9 +39,8 @@ const Input = forwardRef(
     } = props;
     return (
       <span
-
-        className={"input_wrap "+wrapperClassName}
-        style={{ display: "inline-block", ...wrapperStyle }}
+        className={"relative w-full"}
+        style={{ display: "inline-block" }}
       >
         {props.label && <label htmlFor={id}>{label}</label>}
         {type !== "textarea" ? (
@@ -58,7 +57,7 @@ const Input = forwardRef(
             type={type}
             placeholder={placeholder}
             ref={ref as RefObject<HTMLInputElement>}
-            className={className}
+            className={` ${className} focus:border-blue-500 focus:ring`}
             name={name}
             multiple={multiple ? true : false}
             accept={accept}
