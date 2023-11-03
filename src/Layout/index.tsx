@@ -5,10 +5,18 @@ import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 function index() {
   return (
-    <div>
-      <Header></Header>
-      <Outlet/>
-      <Footer></Footer>
+    <div className="layout_color w-full h-full flex flex-col justify-between">
+      <div className="basis-1/6">
+        <Header></Header>
+      </div>
+      <div className=" flex justify-center grow-1">
+        <div className="py-16 px-16 w-4/5 shadow-2xl w-5 h-full">
+          <Outlet />
+        </div>
+      </div>
+      <div className="basis-1/6">
+        <Footer></Footer>
+      </div>
     </div>
   );
 }

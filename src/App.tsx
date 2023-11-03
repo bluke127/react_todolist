@@ -44,10 +44,10 @@ function App() {
   };
   useEffect(() => {
     redirect("/todo");
+    document.getElementById("root").style.height=`${window.innerHeight}px`
   }, []);
   return (
-    <div className="App" onFocus={setTarget} onClick={setTarget}>
-      selector:{selector}
+    <div className="App w-full h-full" onFocus={setTarget} onClick={setTarget}>
       <Layout />
     </div>
   );

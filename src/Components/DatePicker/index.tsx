@@ -1,4 +1,4 @@
-import { SetStateAction, SyntheticEvent, useState } from "react";
+import { SyntheticEvent } from "react";
 import _DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
@@ -23,16 +23,11 @@ function DatePicker({
   alwaysOpen = false,
 }: PropType) {
   const handleOnChangeFunc = (d: Date, e: SyntheticEvent<any, Event>) => {
-    // console.log(moment(d).format(DATE_FORMAT), new Date(moment(d).format(DATE_FORMAT)))
     onChange
       ? onChange(d, e)
       : setSelectedDate(() => {
           return moment(d).format(U_DATE_FORMAT);
         });
-  };
-  const a = (e) => {
-    e.preventDefault();
-    alert("ss");
   };
   return (
     <div>

@@ -6,6 +6,9 @@
     @apply focus:outline-none
   }
 }
+.layout_color {
+  background-color:#F5F3F3
+}
 @font-face {
   font-family: "Dovemayo_gothic";
   font-weight: normal;
