@@ -40,7 +40,6 @@ function App() {
     );
   }, [isDesktop, isTablet, isMobile]);
   const setTarget: (e: any) => void = (e: FocusEvent) => {
-    e.preventDefault();
     let t: EventTarget = e.target;
     if (t instanceof Element) {
       dispatch(SetFocusTarget(t.id));

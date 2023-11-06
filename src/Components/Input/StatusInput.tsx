@@ -5,11 +5,11 @@ import Input from "@/Components/Input/index";
 import { InputType } from "src/Types";
 import { useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
-interface propsType extends InputType {
+interface PropsType extends InputType {
   validation?: RegExp;
   onClear?: Function | ChangeEventHandler;
 }
-export default function StatusInput(props: propsType) {
+export default function StatusInput(props: PropsType) {
   const uniqueId = useId();
   //props
   const {

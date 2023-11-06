@@ -8,16 +8,29 @@ import { ChangeEvent, useCallback, useState } from "react";
 import useReducer from "@/Hooks/useReducer";
 import { useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
+import CheckBox from "@/Components/Input/CheckBox";
 
 function ComponentTest() {
   const { setPopup } = useReducer();
   const [text, setText] = useState("");
+  const [chkV, setChkV] = useState<boolean>(false);
   const [date1, setDate1] = useState<any>(moment().format(U_DATE_FORMAT));
   const [date2, setDate2] = useState<any>(moment().format(U_DATE_FORMAT));
   const onButtonClick = useCallback(() => {
     alert("onButtonClick");
   }, []);
 
+  const onCheckBoxClick = useCallback(
+    (e) => 
+      // alert((e.target as HTMLInputElement).checked);
+      setChkV((v) => {
+        v = (e.target as HTMLInputElement).checked;
+        alert(v+"vv")
+        return v;
+      }),
+    // },
+    []
+  );
   const popupFlag: boolean = useSelector((s: ReducerType) => {
     return s.PopupReducer.visible;
   });
@@ -48,11 +61,10 @@ function ComponentTest() {
             type="text"
             placeholder="search..."
             value={text}
-            onChange={(e: ChangeEvent) =>{
-              console.log(e,"eeee")
-              setText((e.target?(e.target as HTMLInputElement).value:""))
-            }
-            }
+            onChange={(e: ChangeEvent) => {
+              console.log(e, "eeee");
+              setText(e.target ? (e.target as HTMLInputElement).value : "");
+            }}
           />
         </li>
 
@@ -81,9 +93,16 @@ function ComponentTest() {
           />
         </li>
         <li>
-          <Button onClick={() => setPopup("팝업", { Confirm: () => {},Cancel: () => {} })}>
+          <Button
+            onClick={() =>
+              setPopup("팝업", { Confirm: () => {}, Cancel: () => {} })
+            }
+          >
             팝업
           </Button>
+        </li>
+        <li>
+          <CheckBox onChange={onCheckBoxClick} value={chkV} />
         </li>
       </ul>
     </div>
