@@ -1,4 +1,4 @@
-import { ChangeEventHandler, KeyboardEventHandler, FormEvent } from "react";
+import { ChangeEventHandler, KeyboardEventHandler, FormEvent, MouseEventHandler } from "react";
 export interface InputType {
   value?: string | boolean | number;
   defaultValue?: string | number;
@@ -18,3 +18,18 @@ export interface InputType {
   multiple?: boolean;
   accept?: string;
 }
+
+//object의 key가 확실하지 않은 타입
+export interface UnknownObj<T = any> {
+  [key: string]: T;
+}
+//팝업이나 모달의 type
+export type ModalPopupType = {
+  type?: string;
+  content: string;
+  btnList: {
+    word: string;
+    func: Event | Function | MouseEventHandler<HTMLButtonElement>;
+  }[];
+  visible: boolean;
+};

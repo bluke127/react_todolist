@@ -22,7 +22,6 @@ export const MediaQueryReducer = (
   state = INITAIL_MEDIA_QUERY,
   action: { type: string; media: any }
 ) => {
-  console.log(action,"action")
   switch (action.type) {
     case `MEDIAQUERY/${action.media}`:
       return action.media;

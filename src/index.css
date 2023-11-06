@@ -2,12 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
-  input{
-    @apply focus:outline-none
+  input {
+    @apply focus:outline-none;
   }
 }
 .layout_color {
-  background-color:#F5F3F3
+  background-color: #f5f3f3;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @font-face {
   font-family: "Dovemayo_gothic";
@@ -16,4 +21,9 @@
 }
 body {
   font-family: "Dovemayo_gothic";
+}
+#popup_root {
+  position: fixed;
+  top: 0;
+  left: 0;
 }

@@ -5,8 +5,12 @@ import Button from "@/Components/Button/index";
 import Input from "@/Components/Input";
 import StatusInput from "@/Components/Input/StatusInput";
 import { ChangeEvent, useCallback, useState } from "react";
+import useReducer from "@/Hooks/useReducer";
+import { useSelector } from "react-redux";
+import { ReducerType } from "@/Types/store";
 
 function ComponentTest() {
+  const { setPopup } = useReducer();
   const [text, setText] = useState("");
   const [date1, setDate1] = useState<any>(moment().format(U_DATE_FORMAT));
   const [date2, setDate2] = useState<any>(moment().format(U_DATE_FORMAT));
@@ -14,6 +18,9 @@ function ComponentTest() {
     alert("onButtonClick");
   }, []);
 
+  const popupFlag: boolean = useSelector((s: ReducerType) => {
+    return s.PopupReducer.visible;
+  });
   return (
     <div>
       <ul>
@@ -41,8 +48,10 @@ function ComponentTest() {
             type="text"
             placeholder="search..."
             value={text}
-            onChange={(e: ChangeEvent) =>
-              setText((e.target as HTMLInputElement).value)
+            onChange={(e: ChangeEvent) =>{
+              console.log(e,"eeee")
+              setText((e.target?(e.target as HTMLInputElement).value:""))
+            }
             }
           />
         </li>
@@ -70,6 +79,11 @@ function ComponentTest() {
             setSelectedDate={setDate2}
             alwaysOpen={false}
           />
+        </li>
+        <li>
+          <Button onClick={() => setPopup("팝업", { Confirm: () => {},Cancel: () => {} })}>
+            팝업
+          </Button>
         </li>
       </ul>
     </div>
