@@ -8,7 +8,9 @@
       "@/Pages/*": ["src/Pages/*"],
       "@/Store/*": ["src/Store/*"],
       "@/Fonts/*": ["src/Assets/Fonts/*"],
-      "@/Constant/*": ["src/Constant/*"]
+      "@/Constant/*": ["src/Constant/*"],
+      "@/Enum/*": ["src/Enum/*"],
+      "@/Types/*": ["src/Types/*"]
     }
   }
 }

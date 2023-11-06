@@ -10,7 +10,7 @@ function index() {
         <Header></Header>
       </div>
       <div className=" flex justify-center grow-1">
-        <div className="py-16 px-16 w-4/5 shadow-2xl w-5 h-full">
+        <div className="py-16 px-16 shadow-2xl w-4/5 h-full">
           <Outlet />
         </div>
       </div>

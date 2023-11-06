@@ -14,12 +14,15 @@ import { SetFocusTarget } from "./Store/reducers/utils";
 import Layout from "@/Layout/index";
 import { useMediaQuery } from "react-responsive";
 import { redirect } from "react-router-dom";
+import { PopupPortal } from "./Components/Popup/PopupPortal";
+import { ReducerType } from "./Types/store";
+import { PopupReducer } from "./Store/reducers/popup";
+import Popup from "./Components/Popup";
 
 function App() {
   const dispatch: Dispatch<AnyAction> = useDispatch();
-  const selector: string = useSelector((s: ReducerType) => {
-    console.log(s, "ss");
-    return s.UtilsReducer.FOCUS_TARGET as string;
+  const popupFlag: boolean = useSelector((s: ReducerType) => {
+    return s.PopupReducer.visible;
   });
 
   const isDesktop: boolean = useMediaQuery({
@@ -37,6 +40,7 @@ function App() {
     );
   }, [isDesktop, isTablet, isMobile]);
   const setTarget: (e: any) => void = (e: FocusEvent) => {
+    e.preventDefault();
     let t: EventTarget = e.target;
     if (t instanceof Element) {
       dispatch(SetFocusTarget(t.id));
@@ -44,11 +48,14 @@ function App() {
   };
   useEffect(() => {
     redirect("/todo");
-    document.getElementById("root").style.height=`${window.innerHeight}px`
+    document.getElementById("root").style.height = `${window.innerHeight}px`;
   }, []);
   return (
     <div className="App w-full h-full" onFocus={setTarget} onClick={setTarget}>
       <Layout />
+      <PopupPortal>
+        <Popup />{" "}
+      </PopupPortal>
     </div>
   );
 }

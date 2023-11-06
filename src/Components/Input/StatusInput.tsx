@@ -4,6 +4,7 @@ import Input from "@/Components/Input/index";
 // import "@/styles/components/Input/StatusInput.scss";
 import { InputType } from "src/Types";
 import { useSelector } from "react-redux";
+import { ReducerType } from "@/Types/store";
 interface propsType extends InputType {
   validation?: RegExp;
   onClear?: Function | ChangeEventHandler;
@@ -21,6 +22,7 @@ export default function StatusInput(props: propsType) {
     validation,
     onClear = () => {
       (onChange as Function)("");
+      (InputRef?.current as HTMLInputElement).value=""
     },
     label,
   } = props;
@@ -41,9 +43,9 @@ export default function StatusInput(props: propsType) {
   }, [value]);
 
   return (
-    <div className="input_wrap">
+    <div className="flex">
       {props.label && <label htmlFor={id ?? ""}>{label}</label>}
-      <div className="status_input_wrap">
+      <div className="relative">
         <Input
           id={id ?? ""}
           value={value}
@@ -54,9 +56,8 @@ export default function StatusInput(props: propsType) {
           ref={InputRef}
           className={passValidation ? "success" : "fail"}
         />
-        {(InputRef?.current as HTMLElement)?.id}
         {targetInputId === (InputRef?.current as HTMLElement)?.id && (
-          <span className="clear_value" onClick={()=>onClear}>
+          <span className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 flex justify-center" onClick={()=>onClear()}>
             <AiFillCloseCircle />
           </span>
          )} 

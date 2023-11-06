@@ -4,12 +4,13 @@ type PropsType = {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   style?: CSS.Properties;
   children: React.ReactNode;
-  isDebouncedButton: boolean;
+  isDebouncedButton?: boolean;
+  className?:string
 };
 function Button(props: PropsType) {
   //props
   // onClick, style, children : 버튼 내용, isDebouncedButton : 디바운스 할 버튼인지
-  const { onClick, style, children, isDebouncedButton = true } = props;
+  const { onClick, style, children, className,isDebouncedButton = true } = props;
   //useRef
   const buttonRef = useRef(null);
   let timeout: number | ReturnType<typeof setTimeout>;
@@ -31,6 +32,7 @@ function Button(props: PropsType) {
   }, []);
   return (
     <button
+      className={className}
       ref={buttonRef}
       style={style}
       onClick={isDebouncedButton ? debounce(onClick, 500) : onClick}
