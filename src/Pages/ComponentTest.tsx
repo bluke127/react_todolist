@@ -4,7 +4,7 @@ import { U_DATE_FORMAT } from "../Constant";
 import Button from "@/Components/Button/index";
 import Input from "@/Components/Input";
 import StatusInput from "@/Components/Input/StatusInput";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState,useRef } from "react";
 import useReducer from "@/Hooks/useReducer";
 import { useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
@@ -34,6 +34,7 @@ function ComponentTest() {
   const popupFlag: boolean = useSelector((s: ReducerType) => {
     return s.PopupReducer.visible;
   });
+  const chkRef= useRef()
   return (
     <div>
       <ul>
@@ -102,7 +103,7 @@ function ComponentTest() {
           </Button>
         </li>
         <li>
-          <CheckBox onChange={onCheckBoxClick} value={chkV} />
+          <CheckBox onChange={onCheckBoxClick} value={chkV} ref={chkRef}/>{"체크박스"+chkV}
         </li>
       </ul>
     </div>
