@@ -9,6 +9,7 @@ import useReducer from "@/Hooks/useReducer";
 import { useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
 import CheckBox from "@/Components/Input/CheckBox";
+import DragNDrop from "@/Components/DragNDrop";
 
 function ComponentTest() {
   const { setPopup } = useReducer();
@@ -16,24 +17,28 @@ function ComponentTest() {
   const [chkV, setChkV] = useState<boolean>(false);
   const [date1, setDate1] = useState<any>(moment().format(U_DATE_FORMAT));
   const [date2, setDate2] = useState<any>(moment().format(U_DATE_FORMAT));
+  const [itemList, setItemList] = useState([
+    { content: "아이템1" },
+    { content: "아이템2" },
+    { content: "아이템3" },
+    { content: "아이템4" },
+  ]);
   const onButtonClick = useCallback(() => {
     alert("onButtonClick");
   }, []);
 
   const onCheckBoxClick = useCallback(
-    (e) => 
+    (e) =>
       // alert((e.target as HTMLInputElement).checked);
       setChkV((v) => {
         v = (e.target as HTMLInputElement).checked;
-        alert(v+"vv")
+        alert(v + "vv");
         return v;
       }),
     // },
     []
   );
-  const popupFlag: boolean = useSelector((s: ReducerType) => {
-    return s.PopupReducer.visible;
-  });
+
   return (
     <div>
       <ul>
@@ -103,6 +108,10 @@ function ComponentTest() {
         </li>
         <li>
           <CheckBox onChange={onCheckBoxClick} value={chkV} />
+        </li>
+        <li>
+          <p>드레그앤드랍</p>
+          <DragNDrop itemList={itemList} setItemList={setItemList} />
         </li>
       </ul>
     </div>
