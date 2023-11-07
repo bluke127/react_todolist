@@ -4,7 +4,7 @@ import { U_DATE_FORMAT } from "../Constant";
 import Button from "@/Components/Button/index";
 import Input from "@/Components/Input";
 import StatusInput from "@/Components/Input/StatusInput";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState, useRef } from "react";
 import useReducer from "@/Hooks/useReducer";
 import { useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
@@ -90,7 +90,6 @@ function ComponentTest() {
             }
           />
           <br />
-          <br />
           <DatePicker
             selectedDate={date2}
             setSelectedDate={setDate2}
@@ -98,16 +97,17 @@ function ComponentTest() {
           />
         </li>
         <li>
+          <p>팝업</p>
           <Button
             onClick={() =>
               setPopup("팝업", { Confirm: () => {}, Cancel: () => {} })
             }
-          >
-            팝업
-          </Button>
+          >팝업</Button>
         </li>
         <li>
+          <p>체크박스</p>
           <CheckBox onChange={onCheckBoxClick} value={chkV} />
+          {chkV}
         </li>
         <li>
           <p>드레그앤드랍</p>

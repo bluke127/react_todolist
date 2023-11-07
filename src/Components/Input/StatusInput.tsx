@@ -29,7 +29,6 @@ export default function StatusInput(props: PropsType) {
   //useRef
   const InputRef = useRef();
   const targetInputId: string = useSelector((s: ReducerType) => {
-    console.log(s, "ss");
     return s.UtilsReducer.FOCUS_TARGET as string;
   });
   //useContext

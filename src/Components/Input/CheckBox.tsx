@@ -1,5 +1,8 @@
 //react
 import { forwardRef, ChangeEventHandler, RefObject } from "react";
+import { useId } from "react";
+import { useEffect } from "react";
+import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 export type PropsType = {
   value: string | boolean | number;
   id?: string;
@@ -15,10 +18,11 @@ export type PropsType = {
 
 const CheckBox = forwardRef(
   (props: PropsType, ref: RefObject<HTMLInputElement>) => {
+    const uniqueId = useId();
     //props
     const {
       value = "",
-      id = "",
+      id = uniqueId,
       onChange,
       style,
       placeholder,
@@ -26,20 +30,23 @@ const CheckBox = forwardRef(
       className,
       name,
       checked,
-      multi
+      multi,
     } = props;
     return (
-      <span className="input_wrap">
+      <span className="inline-block p-2">
+        <label htmlFor={id} className=" align-middle inline-block">
+          {value ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+        </label>
         <input
           id={id}
           // @ts-ignore
           value={value}
           onChange={onChange}
           style={style}
-          type={multi ? "checkbox" : "radio"}
+          type={"checkbox"}
           placeholder={placeholder}
           ref={ref}
-          className={className}
+          className={"hidden"}
           name={name || id}
           checked={checked}
         />
