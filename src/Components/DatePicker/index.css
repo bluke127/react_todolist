@@ -1,0 +1,19 @@
+.react-datepicker-popper,
+.react-datepicker {
+  width: 100%;
+}
+.react-datepicker__tab-loop {
+  width: 100%;
+  position: relative;
+}
+.react-datepicker__month-container {
+  width: 100%;
+}
+.react-datepicker__day-names,
+.react-datepicker__week {
+  display: flex;
+}
+.react-datepicker__day-name,
+.react-datepicker__day {
+  flex: 1;
+}
