@@ -5,12 +5,12 @@ function DragNDrop({ itemList, setItemList }) {
   const dragItem = useRef();
   const dragOverItem = useRef();
   const dragStart = (idx) => {
-    console.log(idx+"start")
+    console.log(idx + "start");
     dragItem.current = idx;
   };
 
   const dragEnter = (idx) => {
-    console.log(idx+"enter")
+    console.log(idx + "enter");
     dragOverItem.current = idx;
   };
 
@@ -25,23 +25,27 @@ function DragNDrop({ itemList, setItemList }) {
     console.log("드랍");
   };
   return (
-    <ul>
-      {itemList.map((item, index) => (
-        <li
-        key={index}
-        draggable
-          className="cursor-grab actvie:cursor-grab"
-          onDragStart={() => dragStart(index)}
-          onDragEnter={() => dragEnter(index)}
-          onDragOver={(e) => e.preventDefault()}
-          onDragEnd={drop}
-        >
-        start{JSON.stringify(dragItem.current)}<br/>
-        enetr{JSON.stringify(dragOverItem.current)}
-          <Item value={item.value} index={index} content={item.content} />{" "}
-        </li>
-      ))}
-    </ul>
+    <div className="w-full min-h-[30%] bg-brown-300 py-1 px-3 shadow-orange-50 border-slate-950 bg-yellow-600">
+      <ul>
+        {itemList.map((item, index) => (
+          <li
+            key={index}
+            draggable
+            className="border-y-stone-900 border-b-2 cursor-grab actvie:cursor-grab"
+            onDragStart={() => dragStart(index)}
+            onDragEnter={() => dragEnter(index)}
+            onDragOver={(e) => e.preventDefault()}
+            onDragEnd={drop}
+          >
+            <Item
+              value={item.value}
+              index={index}
+              content={item.content}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

@@ -17,6 +17,7 @@ type PropType = {
   minDate?: null | Date;
   maxDate?: null | Date;
   alwaysOpen?: boolean;
+  popperClassName?: string;
 };
 const DatePicker = forwardRef((props: PropType, ref: any) => {
   let {
@@ -27,6 +28,7 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
     setSelectedDate,
     dateFormat = DATE_FORMAT as string,
     alwaysOpen = false,
+    popperClassName="",
   } = props;
   const YEARS = Array.from(
     { length: getYear(new Date()) + 1 - 2000 },
@@ -68,6 +70,7 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
         maxDate={maxDate} // maxDate 이후 날짜 선택 불가
         selected={new Date(selectedDate)}
         onChange={handleOnChangeFunc}
+        popperClassName={popperClassName+alwaysOpen?"always_open":""}
         renderCustomHeader={({
           date,
           changeYear,
@@ -78,6 +81,7 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
         }) => (
           <div className="flex justify-between items-center bg-white h-full py-1 px-5">
             <div className="basis-1/2 flex">
+              {alwaysOpen+"sss"}
               <span className="basis-1/2 ">{MONTHS[getMonth(date)]}</span>
               <select
                 value={getYear(date)}

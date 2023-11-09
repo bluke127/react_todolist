@@ -60,8 +60,9 @@
   cursor: default;
   background-color: red;
 }
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
-
+.always_open.react-datepicker-popper{
+  position:static !important
+}
 select { 
   display: inline-block;
   /* 생략 */

@@ -9,8 +9,8 @@ function index() {
       <div className="basis-1/6">
         <Header></Header>
       </div>
-      <div className=" flex justify-center grow-1">
-        <div className="py-16 px-16 shadow-2xl w-4/5 h-full">
+      <div className="flex justify-center flex-grow">
+        <div className="py-5 px-16 shadow-2xl w-4/5 h-full">
           <Outlet />
         </div>
       </div>
