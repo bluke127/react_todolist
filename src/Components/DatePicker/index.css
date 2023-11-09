@@ -1,6 +1,8 @@
 .react-datepicker-popper,
 .react-datepicker {
   width: 100%;
+  font-family: "Dovemayo_gothic";
+  font-size: 20px;
 }
 .react-datepicker__tab-loop {
   width: 100%;
@@ -17,17 +19,9 @@
 .react-datepicker__day {
   flex: 1;
 }
-.customHeaderContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: lightskyblue;
-  height: 100%;
-  margin-top: 8px;
-  padding: 0 12px 0 24px;
-}
 .customHeaderContainer .month_wrap{
   flex-basis: 50%;
+  font-size: 32px;
 
 }
 .customHeaderContainer .month {
@@ -68,18 +62,22 @@
 }
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 
-select {
+select { 
+  display: inline-block;
   /* 생략 */
+  width:100%;
   font-family: "Noto Sansf KR", sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
 
   color: #444;
-  background-color: #fff;
+  background-color: transparent;
 
   padding: 0.6em 1.4em 0.5em 0.8em;
-  margin: 0;
+  margin: 0;    -webkit-appearance:none; /* 크롬 화살표 없애기 */
+  -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
+  appearance:none /* 화살표 없애기 */
 
 }
 select:focus {
