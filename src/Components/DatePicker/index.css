@@ -17,3 +17,71 @@
 .react-datepicker__day {
   flex: 1;
 }
+.customHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: lightskyblue;
+  height: 100%;
+  margin-top: 8px;
+  padding: 0 12px 0 24px;
+}
+.customHeaderContainer .month_wrap{
+  flex-basis: 50%;
+
+}
+.customHeaderContainer .month {
+  color: #eee;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.customHeaderContainer .year {
+  background-color: lightskyblue;
+  color: #eee;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding-right: 5px;
+  width:50%;
+  cursor: pointer;
+  font-family: "Noto Sans KR", serif;
+}
+
+.monthButton {
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+  border-radius: 50%;
+}
+.monthButton {
+  margin-left: 24px;
+}
+
+.monthButton :hover {
+  background-color: rgba(#eee, 0.08);
+}
+
+.monthButton :disabled {
+  cursor: default;
+  background-color: red;
+}
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+select {
+  /* 생략 */
+  font-family: "Noto Sansf KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+
+  color: #444;
+  background-color: #fff;
+
+  padding: 0.6em 1.4em 0.5em 0.8em;
+  margin: 0;
+
+}
+select:focus {
+  outline: none;
+}

@@ -8,6 +8,7 @@ import _ from "lodash";
 import "./index.css";
 
 import { DATE_FORMAT, U_DATE_FORMAT } from "@/Constant/index";
+import Button from "../Button";
 type PropType = {
   onChange?: (date: Date, event: SyntheticEvent<any, Event>) => void;
   selectedDate: Date | null;
@@ -26,20 +27,22 @@ function DatePicker({
   dateFormat = DATE_FORMAT as string,
   alwaysOpen = false,
 }: PropType) {
-  const years = _.range(1990, getYear(new Date()) + 1, 1); // 수정
-  const months = [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월",
+  const YEARS = Array.from({ length: getYear(new Date()) + 1 - 2000 }, (_, i) => getYear(new Date()) - i);
+
+
+  const MONTHS = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
 
   const handleOnChangeFunc = (d: Date, e: SyntheticEvent<any, Event>) => {
@@ -64,58 +67,40 @@ function DatePicker({
         renderCustomHeader={({
           date,
           changeYear,
-          changeMonth,
           decreaseMonth,
           increaseMonth,
           prevMonthButtonDisabled,
           nextMonthButtonDisabled,
         }) => (
-          <div
-            style={{
-              width: "100%",
-              margin: 10,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-              {"<"}
-            </button>
-            <ul
-            // value={getYear(date)}
-            // onChange={({ target: { value } }) => changeYear(+value)}
-            >
-              {years.map((option) => (
-                <li
-                  key={option}
-                  value={getYear(date)}
-                  onClick={(e) => changeYear(+option)}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-
-            <ul
-              // value={months[getMonth(date)]}
-              // onChange={({ target: { value } }) =>
-              //   changeMonth(months.indexOf(value))
-              // }
-            >
-              {months.map((option) => (
-                <li
-                  key={option}
-                  value={months[getMonth(date)]}
-                  onClick={(e) => changeMonth(months.indexOf(option))}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-
-            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-              {">"}
-            </button>
+          <div className="customHeaderContainer">
+            <div className="month_wrap">
+              <span className="month">{MONTHS[getMonth(date)]}</span>
+              <select
+                value={getYear(date)}
+                className="year"
+                onChange={({ target: { value } }) => changeYear(+value)}
+              >
+                {YEARS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div >
+              <Button
+                onClick={decreaseMonth}
+                className="monthButton"
+              >
+                &lt;
+              </Button>
+              <Button
+                onClick={increaseMonth}
+                className="monthButton"
+              >
+                &gt;
+              </Button>
+            </div>
           </div>
         )}
       />
