@@ -1,63 +1,21 @@
 {
   "name": "todolist",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@craco/craco": "^7.1.0",
-    "@reduxjs/toolkit": "^1.9.7",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.59",
-    "@types/react": "^18.2.30",
-    "@types/react-dom": "^18.2.14",
-    "@types/react-responsive": "^8.0.7",
-    "autoprefixer": "^10.4.16",
-    "craco-alias": "^3.0.1",
-    "date-fns": "^2.30.0",
-    "moment": "^2.29.4",
-    "package": "^1.0.1",
-    "postcss": "^8.4.31",
-    "react": "^18.2.0",
-    "react-datepicker": "^4.21.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "react-lodash": "^0.1.2",
-    "react-redux": "^8.1.3",
-    "react-responsive": "^9.0.2",
-    "react-router-dom": "^6.17.0",
-    "react-scripts": "5.0.1",
-    "redux": "^4.2.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "start-backend": "cd backend && node app.js",
+    "start-frontend": "cd frontend && npm start",
+    "build": "concurrently \"npm run build-backend\" \"npm run build-frontend\"",
+    "build-backend": "cd backend && npm run build",
+    "build-frontend": "cd frontend && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@types/react-datepicker": "^4.19.1",
-    "tailwindcss": "^3.3.5"
+    "concurrently": "^8.2.2"
   }
 }
