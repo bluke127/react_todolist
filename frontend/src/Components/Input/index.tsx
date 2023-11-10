@@ -35,7 +35,8 @@ const Input = forwardRef(
       wrapperClassName,
       name,
       multiple,
-      accept
+      accept,
+      readonly=false
     } = props;
     return (
       <span
@@ -57,11 +58,12 @@ const Input = forwardRef(
             type={type}
             placeholder={placeholder}
             ref={ref as RefObject<HTMLInputElement>}
-            className={` ${className} focus:border-blue-500 focus:ring`}
+            className={` ${className??""} w-full focus:border-blue-500 focus:ring`}
             name={name}
             multiple={multiple ? true : false}
             accept={accept}
             autoComplete={"off"}
+            readOnly={readonly}
           />
         ) : (
           <textarea

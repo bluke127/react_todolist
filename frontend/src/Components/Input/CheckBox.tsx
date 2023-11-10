@@ -14,6 +14,7 @@ export type PropsType = {
   name?: string;
   checked?: boolean;
   multi?: boolean;
+  readonly?: boolean;
 };
 
 const CheckBox = forwardRef(
@@ -31,6 +32,7 @@ const CheckBox = forwardRef(
       name,
       checked,
       multi,
+      readonly = false,
     } = props;
     return (
       <span className="inline-block p-2">

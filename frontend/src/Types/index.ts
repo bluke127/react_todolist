@@ -1,4 +1,9 @@
-import { ChangeEventHandler, KeyboardEventHandler, FormEvent, MouseEventHandler } from "react";
+import {
+  ChangeEventHandler,
+  KeyboardEventHandler,
+  FormEvent,
+  MouseEventHandler,
+} from "react";
 export interface InputType {
   value?: string | boolean | number;
   defaultValue?: string | number;
@@ -17,8 +22,22 @@ export interface InputType {
   name?: string;
   multiple?: boolean;
   accept?: string;
+  readonly?: boolean;
 }
-
+export interface DragNDropAttrType {
+  cotentClassName?: string;
+  checkboxReadonly?: boolean;
+  contentReadonly?: boolean;
+}
+export interface DragNDropType extends DragNDropAttrType {
+  itemList: DragNDropItemType[];
+  setItemList: any;
+}
+export interface DragNDropItemType extends DragNDropAttrType {
+  index?: number;
+  value?: string | number;
+  content: string | number;
+}
 //object의 key가 확실하지 않은 타입
 export interface UnknownObj<T = any> {
   [key: string]: T;

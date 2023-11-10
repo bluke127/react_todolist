@@ -25,6 +25,8 @@ export default function StatusInput(props: PropsType) {
       (InputRef?.current as HTMLInputElement).value=""
     },
     label,
+    readonly,
+    className
   } = props;
   //useRef
   const InputRef = useRef();
@@ -42,9 +44,9 @@ export default function StatusInput(props: PropsType) {
   }, [value]);
 
   return (
-    <div className="flex">
+    <div className="flex grow">
       {props.label && <label htmlFor={id ?? ""}>{label}</label>}
-      <div className="relative">
+      <div className="relative w-full align-middle">
         <Input
           id={id ?? ""}
           value={value}
@@ -53,9 +55,11 @@ export default function StatusInput(props: PropsType) {
           type={type}
           placeholder={placeholder}
           ref={InputRef}
-          className={passValidation ? "success" : "fail"}
+          className={className+(passValidation ? " success" : " fail")}
+          readonly={readonly}
+          
         />
-        {targetInputId === (InputRef?.current as HTMLElement)?.id && (
+        {targetInputId === (InputRef?.current as HTMLElement)?.id&&!readonly && (
           <span className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 flex justify-center" onClick={()=>onClear()}>
             <AiFillCloseCircle />
           </span>

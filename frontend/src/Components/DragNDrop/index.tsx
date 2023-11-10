@@ -1,7 +1,14 @@
+import { DragNDropType } from "@/Types/index";
 import { useCallback, useRef } from "react";
 import Item from "./Item";
 
-function DragNDrop({ itemList, setItemList }) {
+function DragNDrop({
+  itemList,
+  setItemList,
+  cotentClassName,
+  checkboxReadonly = false,
+  contentReadonly = false,
+}:DragNDropType) {
   const dragItem = useRef();
   const dragOverItem = useRef();
   const dragStart = (idx) => {
@@ -31,7 +38,7 @@ function DragNDrop({ itemList, setItemList }) {
           <li
             key={index}
             draggable
-            className="border-y-stone-900 border-b-2 cursor-grab actvie:cursor-grab"
+            className="flex border-y-stone-900 border-b-2 cursor-grab actvie:cursor-grab"
             onDragStart={() => dragStart(index)}
             onDragEnter={() => dragEnter(index)}
             onDragOver={(e) => e.preventDefault()}
@@ -41,6 +48,9 @@ function DragNDrop({ itemList, setItemList }) {
               value={item.value}
               index={index}
               content={item.content}
+              cotentClassName={cotentClassName}
+              checkboxReadonly={checkboxReadonly}
+              contentReadonly={contentReadonly}
             />
           </li>
         ))}
