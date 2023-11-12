@@ -4,8 +4,9 @@ import StatusInput from "../Input/StatusInput";
 
 function Item({
   index,
-  value,
+  contentId,
   content,
+  setContent,
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
@@ -13,10 +14,10 @@ function Item({
   return (
     <>
       <span>
-        <CheckBox value={value} readonly={checkboxReadonly} />
+        <CheckBox value={contentId} readonly={checkboxReadonly} />
       </span>
       <span className="flex grow items-center">
-        <StatusInput readonly={contentReadonly} className={cotentClassName} />
+        <StatusInput readonly={contentReadonly} className={cotentClassName} value={content} onChange={e=>setContent((e.target as HTMLInputElement).value)}/>
         {content}
       </span>
     </>

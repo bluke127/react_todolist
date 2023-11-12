@@ -1,9 +1,10 @@
-import { useEffect,useCallback, useRef, useState } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 import DatePicker from "@/Components/DatePicker";
 import { U_DATE_FORMAT } from "../Constant";
 import moment from "moment";
 import DragNDrop from "@/Components/DragNDrop";
 import Button from "@/Components/Button";
+import Input from "@/Components/Input";
 
 export function Todo() {
   const [selectedDate, setSelectedDate] = useState<any>(
@@ -11,12 +12,21 @@ export function Todo() {
   );
   const datePicker = useRef();
   const [planList, setPlanList] = useState([]);
+  const [insertValue, setInsertValue] = useState("");
+  const [cntForId,setCntId] = useState(0)
   const onAddTodoList = useCallback(() => {
-    alert()
-    setPlanList(arr=>{
-      return [...arr,{content:""}]
-    })
-  }, [planList]);
+    setPlanList((arr) => {
+      return [...arr, { content: insertValue,contentId:cntForId }];
+    });
+    setCntId(cntForId+1)
+    // setInsertValue("");
+  }, [planList,insertValue]);
+  // const onAddTodoList = useCallback(() => {
+  //   setPlanList((arr) => {
+  //     return [...arr, { content: insertValue }];
+  //   });
+    // setInsertValue("");
+  // }, [planList,insertValue]);
   // const onAddTodoList = useCallback(() => {
   //   setPlanList(arr=>{
   //     arr.push({content:""})
@@ -24,9 +34,7 @@ export function Todo() {
   //   })
   // }, []);
   return (
-
     <div className="red w-full h-full rounded border-solid border-2 border-indigo-600 overflow-y-scroll">
-      
       <DatePicker
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -34,8 +42,16 @@ export function Todo() {
         ref={datePicker}
       ></DatePicker>
       {JSON.stringify(planList)}
-      <DragNDrop itemList={planList} setItemList={setPlanList} contentReadonly={true} checkboxReadonly={true} cotentClassName={'w-full'}></DragNDrop>
-      <Button onClick={onAddTodoList} className="w-full my-4 bg-emerald-200">추가</Button>
+      <DragNDrop
+        contentList={planList}
+        setContentList={setPlanList}
+        cotentClassName={"w-full"}
+      ></DragNDrop>
+      {JSON.stringify(insertValue) + "insertValue"}
+      <Input value={insertValue} onChange={e=>setInsertValue((e.target as HTMLInputElement).value)} />
+      <Button onClick={onAddTodoList} className="w-full my-4 bg-emerald-200">
+        저장
+      </Button>
     </div>
   );
 }

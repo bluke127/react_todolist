@@ -17,11 +17,11 @@ function ComponentTest() {
   const [chkV, setChkV] = useState<boolean>(false);
   const [date1, setDate1] = useState<any>(moment().format(U_DATE_FORMAT));
   const [date2, setDate2] = useState<any>(moment().format(U_DATE_FORMAT));
-  const [itemList, setItemList] = useState([
-    { content: "아이템1" },
-    { content: "아이템2" },
-    { content: "아이템3" },
-    { content: "아이템4" },
+  const [contentList, setContentList] = useState([
+    { content: "아이템1", contentId: 1 },
+    { content: "아이템2", contentId: 2 },
+    { content: "아이템3", contentId: 3 },
+    { content: "아이템4", contentId: 4 },
   ]);
   const onButtonClick = useCallback(() => {
     alert("onButtonClick");
@@ -102,7 +102,9 @@ function ComponentTest() {
             onClick={() =>
               setPopup("팝업", { Confirm: () => {}, Cancel: () => {} })
             }
-          >팝업</Button>
+          >
+            팝업
+          </Button>
         </li>
         <li>
           <p>체크박스</p>
@@ -111,7 +113,10 @@ function ComponentTest() {
         </li>
         <li>
           <p>드레그앤드랍</p>
-          <DragNDrop itemList={itemList} setItemList={setItemList} />
+          <DragNDrop
+            contentList={contentList}
+            setContentList={setContentList}
+          />
         </li>
       </ul>
     </div>

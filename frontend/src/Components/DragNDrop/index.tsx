@@ -3,8 +3,8 @@ import { useCallback, useRef } from "react";
 import Item from "./Item";
 
 function DragNDrop({
-  itemList,
-  setItemList,
+  contentList,
+  setContentList,
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
@@ -22,19 +22,28 @@ function DragNDrop({
   };
 
   const drop = () => {
-    const copyListItems = [...itemList];
+    const copyListItems = [...contentList];
     const dragItemConotent = copyListItems[dragItem.current as number];
     copyListItems.splice(dragItem.current, 1);
     copyListItems.splice(dragOverItem.current, 0, dragItemConotent);
     dragItem.current = null;
     dragOverItem.current = null;
-    setItemList(copyListItems);
+    debugger
+    setContentList(copyListItems);
     console.log("드랍");
   };
+  const setContent = useCallback((v,idx)=>{
+    console.log(v,idx,"@@@")
+    setContentList(arr=>{
+      arr[idx].content = v
+      return [...arr]
+    })
+  },[contentList])
   return (
     <div className="w-full min-h-[30%] bg-brown-300 py-1 px-3 shadow-orange-50 border-slate-950 bg-yellow-600">
+      {JSON.stringify(contentList)+"contentListcontentList"}
       <ul>
-        {itemList.map((item, index) => (
+        {contentList.map((item, index) => (
           <li
             key={index}
             draggable
@@ -45,9 +54,10 @@ function DragNDrop({
             onDragEnd={drop}
           >
             <Item
-              value={item.value}
+              contentId={item.contentId}
               index={index}
               content={item.content}
+              setContent={(v)=>setContent(v,index)}
               cotentClassName={cotentClassName}
               checkboxReadonly={checkboxReadonly}
               contentReadonly={contentReadonly}

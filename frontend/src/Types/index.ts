@@ -30,13 +30,14 @@ export interface DragNDropAttrType {
   contentReadonly?: boolean;
 }
 export interface DragNDropType extends DragNDropAttrType {
-  itemList: DragNDropItemType[];
-  setItemList: any;
+  contentList: {content:string | number,contentId:string|number}[];
+  setContentList: any;
 }
 export interface DragNDropItemType extends DragNDropAttrType {
   index?: number;
-  value?: string | number;
+  contentId?: string | number;
   content: string | number;
+  setContent:any
 }
 //object의 key가 확실하지 않은 타입
 export interface UnknownObj<T = any> {

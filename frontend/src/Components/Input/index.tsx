@@ -48,7 +48,7 @@ const Input = forwardRef(
           <input
             id={id}
             // @ts-ignore
-            // value={value}
+            value={value}
             defaultValue={defaultValue}
             onChange={onChange as ChangeEventHandler}
             onInput={onInput}
@@ -58,7 +58,7 @@ const Input = forwardRef(
             type={type}
             placeholder={placeholder}
             ref={ref as RefObject<HTMLInputElement>}
-            className={` ${className??""} w-full focus:border-blue-500 focus:ring`}
+            className={` ${className??""} w-full focus:border-blue-500 focus:ring ${readonly?'bg-transparent':''}`}
             name={name}
             multiple={multiple ? true : false}
             accept={accept}

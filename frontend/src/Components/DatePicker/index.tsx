@@ -81,7 +81,6 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
         }) => (
           <div className="flex justify-between items-center bg-white h-full py-1 px-5">
             <div className="basis-1/2 flex">
-              {alwaysOpen+"sss"}
               <span className="basis-1/2 ">{MONTHS[getMonth(date)]}</span>
               <select
                 value={getYear(date)}
