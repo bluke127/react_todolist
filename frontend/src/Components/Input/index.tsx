@@ -19,7 +19,7 @@ const Input = forwardRef(
     const uniqueId = useId();
     //props
     const {
-      value = false,
+      value = "",
       defaultValue = "",
       id = uniqueId,
       onChange,
@@ -49,7 +49,6 @@ const Input = forwardRef(
             id={id}
             // @ts-ignore
             value={value}
-            defaultValue={defaultValue}
             onChange={onChange as ChangeEventHandler}
             onInput={onInput}
             onKeyUp={onKeyUp}

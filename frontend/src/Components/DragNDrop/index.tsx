@@ -1,5 +1,6 @@
 import { DragNDropType } from "@/Types/index";
 import { useCallback, useRef } from "react";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import Item from "./Item";
 
 function DragNDrop({
@@ -33,11 +34,17 @@ function DragNDrop({
   };
   const setContent = useCallback(
     (v, itemKey, idx) => {
-      console.log(v, idx, "@@@");
-      setContentList((arr) => {
-        arr[idx][itemKey] = v;
-        return [...arr];
-      });
+      if (itemKey !== "delete") {
+        setContentList((arr) => {
+          arr[idx][itemKey] = v;
+          return [...arr];
+        });
+      } else {
+        setContentList((arr) => {
+          arr.splice(idx, 1);
+          return [...arr];
+        });
+      }
     },
     [contentList]
   );
@@ -58,10 +65,18 @@ function DragNDrop({
             <Item
               item={item}
               setItem={(v, changeKey) => setContent(v, changeKey, index)}
-              cotentClassName={cotentClassName}
+              cotentClassName={
+                cotentClassName + " focus:bg-white bg-transparent "
+              }
               checkboxReadonly={checkboxReadonly}
               contentReadonly={contentReadonly}
             />
+            <div className="basis-[5%] justify-center flex">
+              <MdOutlineDeleteOutline
+                className="w-3/4 h-fit"
+                onClick={() => setContent("_", "delete", index)}
+              />
+            </div>
           </li>
         ))}
       </ul>

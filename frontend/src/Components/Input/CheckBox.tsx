@@ -35,8 +35,8 @@ const CheckBox = forwardRef(
       readonly = false,
     } = props;
     return (
-      <span className="inline-block p-2">
-        <label htmlFor={id} className=" align-middle inline-block">
+      <span className="flex px-2 align-middle items-center">
+        <label htmlFor={id} className="align-middle inline-block">
           {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
         </label>
         <input
