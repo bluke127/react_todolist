@@ -5,7 +5,7 @@ import {
   MouseEventHandler,
 } from "react";
 export interface InputType {
-  value?: string | boolean | number;
+  value?: string | number;
   defaultValue?: string | number;
   id?: string;
   onChange?: ChangeEventHandler | Function;

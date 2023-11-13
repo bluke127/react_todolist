@@ -26,8 +26,12 @@ export function Todo() {
     setPlanList((arr) => {
       return [...saveData];
     });
+    debugger
     setCntId(cntForId + 1);
     setInsertValue("");
+  }, [planList, insertValue]);
+  const onSaveTodoList = useCallback(() => {
+    localStorage.setItem(selectedDate,JSON.stringify(planList))
   }, [planList, insertValue]);
   return (
     <div className="red w-full h-full rounded border-solid border-2 border-indigo-600 overflow-y-scroll">
@@ -43,13 +47,18 @@ export function Todo() {
         setContentList={setPlanList}
         cotentClassName={"w-full"}
       ></DragNDrop>
+      {insertValue+"insertValue"}
       <Input
         value={insertValue}
         onChange={(e) => setInsertValue((e.target as HTMLInputElement).value)}
       />
       <Button onClick={onAddTodoList} className="w-full my-4 bg-emerald-200">
+        추가
+      </Button>
+      <Button onClick={onSaveTodoList} className="w-full my-4 bg-emerald-200">
         저장
       </Button>
+      
     </div>
   );
 }
