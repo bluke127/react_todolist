@@ -1,24 +1,36 @@
 import CheckBox from "@/Components/Input/CheckBox";
-import { DragNDropItemType } from "@/Types/index";
+import { DragNDropAttrType, DragNDropItemType } from "@/Types/index";
 import StatusInput from "../Input/StatusInput";
 
 function Item({
-  index,
-  contentId,
-  content,
-  setContent,
+  item,
+  setItem,
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
-}: DragNDropItemType) {
+}: { item: DragNDropItemType; setItem: any } & DragNDropAttrType) {
+
   return (
     <>
       <span>
-        <CheckBox value={contentId} readonly={checkboxReadonly} />
+        <CheckBox
+          value={item.contentId}
+          readonly={checkboxReadonly}
+          checked={item.checked}
+          onChange={(e) => {
+            setItem((e.target as HTMLInputElement).checked, "checked");
+          }}
+        />
       </span>
       <span className="flex grow items-center">
-        <StatusInput readonly={contentReadonly} className={cotentClassName} value={content} onChange={e=>setContent((e.target as HTMLInputElement).value)}/>
-        {content}
+        <StatusInput
+          readonly={contentReadonly}
+          className={cotentClassName+`${item.checked&&' line-through'}`}
+          value={item.content}
+          onChange={(e) => {
+            setItem((e.target as HTMLInputElement).value, "content");
+          }}
+        />
       </span>
     </>
   );

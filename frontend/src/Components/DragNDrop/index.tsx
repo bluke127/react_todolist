@@ -8,7 +8,7 @@ function DragNDrop({
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
-}:DragNDropType) {
+}: DragNDropType) {
   const dragItem = useRef();
   const dragOverItem = useRef();
   const dragStart = (idx) => {
@@ -28,20 +28,22 @@ function DragNDrop({
     copyListItems.splice(dragOverItem.current, 0, dragItemConotent);
     dragItem.current = null;
     dragOverItem.current = null;
-    debugger
     setContentList(copyListItems);
     console.log("드랍");
   };
-  const setContent = useCallback((v,idx)=>{
-    console.log(v,idx,"@@@")
-    setContentList(arr=>{
-      arr[idx].content = v
-      return [...arr]
-    })
-  },[contentList])
+  const setContent = useCallback(
+    (v, itemKey, idx) => {
+      console.log(v, idx, "@@@");
+      setContentList((arr) => {
+        arr[idx][itemKey] = v;
+        return [...arr];
+      });
+    },
+    [contentList]
+  );
   return (
     <div className="w-full min-h-[30%] bg-brown-300 py-1 px-3 shadow-orange-50 border-slate-950 bg-yellow-600">
-      {JSON.stringify(contentList)+"contentListcontentList"}
+      {JSON.stringify(contentList) + "contentListcontentList"}
       <ul>
         {contentList.map((item, index) => (
           <li
@@ -54,10 +56,8 @@ function DragNDrop({
             onDragEnd={drop}
           >
             <Item
-              contentId={item.contentId}
-              index={index}
-              content={item.content}
-              setContent={(v)=>setContent(v,index)}
+              item={item}
+              setItem={(v, changeKey) => setContent(v, changeKey, index)}
               cotentClassName={cotentClassName}
               checkboxReadonly={checkboxReadonly}
               contentReadonly={contentReadonly}

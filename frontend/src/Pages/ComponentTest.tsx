@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
 import CheckBox from "@/Components/Input/CheckBox";
 import DragNDrop from "@/Components/DragNDrop";
+import { DragNDropType } from "../Types";
 
 function ComponentTest() {
   const { setPopup } = useReducer();
@@ -17,11 +18,12 @@ function ComponentTest() {
   const [chkV, setChkV] = useState<boolean>(false);
   const [date1, setDate1] = useState<any>(moment().format(U_DATE_FORMAT));
   const [date2, setDate2] = useState<any>(moment().format(U_DATE_FORMAT));
+  const [checkedList, setCheckedList] = useState<DragNDropType[]>([]);
   const [contentList, setContentList] = useState([
-    { content: "아이템1", contentId: 1 },
-    { content: "아이템2", contentId: 2 },
-    { content: "아이템3", contentId: 3 },
-    { content: "아이템4", contentId: 4 },
+    { content: "아이템1", contentId: 1, checked:false },
+    { content: "아이템2", contentId: 2, checked:true },
+    { content: "아이템3", contentId: 3, checked:true },
+    { content: "아이템4", contentId: 4, checked:false },
   ]);
   const onButtonClick = useCallback(() => {
     alert("onButtonClick");

@@ -13,26 +13,22 @@ export function Todo() {
   const datePicker = useRef();
   const [planList, setPlanList] = useState([]);
   const [insertValue, setInsertValue] = useState("");
-  const [cntForId,setCntId] = useState(0)
+  const [cntForId, setCntId] = useState(0);
   const onAddTodoList = useCallback(() => {
+    let saveData = [...planList];
+    if (insertValue) {
+      saveData.push({
+        content: insertValue,
+        contentId: cntForId,
+        checked: false,
+      });
+    }
     setPlanList((arr) => {
-      return [...arr, { content: insertValue,contentId:cntForId }];
+      return [...saveData];
     });
-    setCntId(cntForId+1)
-    // setInsertValue("");
-  }, [planList,insertValue]);
-  // const onAddTodoList = useCallback(() => {
-  //   setPlanList((arr) => {
-  //     return [...arr, { content: insertValue }];
-  //   });
-    // setInsertValue("");
-  // }, [planList,insertValue]);
-  // const onAddTodoList = useCallback(() => {
-  //   setPlanList(arr=>{
-  //     arr.push({content:""})
-  //     return arr
-  //   })
-  // }, []);
+    setCntId(cntForId + 1);
+    setInsertValue("");
+  }, [planList, insertValue]);
   return (
     <div className="red w-full h-full rounded border-solid border-2 border-indigo-600 overflow-y-scroll">
       <DatePicker
@@ -47,8 +43,10 @@ export function Todo() {
         setContentList={setPlanList}
         cotentClassName={"w-full"}
       ></DragNDrop>
-      {JSON.stringify(insertValue) + "insertValue"}
-      <Input value={insertValue} onChange={e=>setInsertValue((e.target as HTMLInputElement).value)} />
+      <Input
+        value={insertValue}
+        onChange={(e) => setInsertValue((e.target as HTMLInputElement).value)}
+      />
       <Button onClick={onAddTodoList} className="w-full my-4 bg-emerald-200">
         저장
       </Button>

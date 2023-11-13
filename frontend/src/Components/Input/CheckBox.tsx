@@ -37,7 +37,7 @@ const CheckBox = forwardRef(
     return (
       <span className="inline-block p-2">
         <label htmlFor={id} className=" align-middle inline-block">
-          {value ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+          {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
         </label>
         <input
           id={id}
