@@ -53,7 +53,7 @@ function App() {
     <div className="App w-full h-full" onFocus={setTarget} onClick={setTarget}>
       <Layout />
       <PopupPortal>
-        <Popup />{" "}
+        <Popup />
       </PopupPortal>
     </div>
   );

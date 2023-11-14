@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import CSS from "csstype";
 type PropsType = {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   style?: CSS.Properties;
   children: React.ReactNode;
   isDebouncedButton?: boolean;

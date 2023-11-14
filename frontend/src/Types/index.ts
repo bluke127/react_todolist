@@ -43,7 +43,7 @@ export interface UnknownObj<T = any> {
   [key: string]: T;
 }
 //팝업이나 모달의 type
-export type ModalPopupType = {
+export type PopupType = {
   type?: string;
   content: string;
   btnList: {
@@ -51,4 +51,9 @@ export type ModalPopupType = {
     func: Event | Function | MouseEventHandler<HTMLButtonElement>;
   }[];
   visible: boolean;
+};
+
+//팝업이나 모달의 type
+export type ModalType = {
+  [key: string]: { visible: boolean };
 };

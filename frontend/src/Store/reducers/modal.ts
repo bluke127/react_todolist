@@ -1,36 +1,31 @@
 import { useEffect, useState } from "react";
-import { ModalPopupType } from "@/Types/index";
+import { ModalType } from "@/Types/index";
 import { Popup } from "@/Enum/Popup";
 import { useDispatch } from "react-redux";
-const INITIAL_POPUP_INFO = {
-  type: "알림",
-  visible: false,
-  content: "",
-  btnList: [],
+const INITIAL_MODAL_INFO = {
+  // visible: false,
 };
 
-export const ShowPopup = (popupInfo: ModalPopupType) => {
+export const ShowModal = (id: any) => {
+  console.log("rrrrr", { [id]: { visible: true } });
   return {
-    type: `POPUP/Show`,
-    payload: { ...popupInfo, visible: true },
+    type: `MODAL/Setting`,
+    payload: { [id]: { visible: true } },
   };
 };
-export const ClosePopup = () => {
+export const CloseModal = (id: any) => {
   return {
-    type: `POPUP/Close`,
-    payload: INITIAL_POPUP_INFO,
+    type: `MODAL/Setting`,
+    payload: { [id]: { visible: false } },
   };
 };
 export const ModalReducer = (
-  state = INITIAL_POPUP_INFO,
-  action: { type: string; payload: ModalPopupType }
-  ) => {
-    console.log(action, "action???");
-    switch (action.type) {
-      case `POPUP/Show`:
-        return { ...state, ...action.payload };
-    case `POPUP/Close`:
-      return { ...state, ...INITIAL_POPUP_INFO };
+  state = INITIAL_MODAL_INFO,
+  action: { type: string; payload: ModalType }
+) => {
+  switch (action.type) {
+    case `MODAL/Setting`:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

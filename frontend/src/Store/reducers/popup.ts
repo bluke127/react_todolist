@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ModalPopupType } from "@/Types/index";
+import { PopupType } from "@/Types/index";
 import { Popup } from "@/Enum/Popup";
 import { useDispatch } from "react-redux";
 const INITIAL_POPUP_INFO = {
@@ -9,7 +9,7 @@ const INITIAL_POPUP_INFO = {
   btnList: [],
 };
 
-export const ShowPopup = (popupInfo: ModalPopupType) => {
+export const ShowPopup = (popupInfo: PopupType) => {
   return {
     type: `POPUP/Show`,
     payload: { ...popupInfo, visible: true },
@@ -23,9 +23,8 @@ export const ClosePopup = () => {
 };
 export const PopupReducer = (
   state = INITIAL_POPUP_INFO,
-  action: { type: string; payload: ModalPopupType }
+  action: { type: string; payload: PopupType }
   ) => {
-    console.log(action, "action???");
     switch (action.type) {
       case `POPUP/Show`:
         return { ...state, ...action.payload };

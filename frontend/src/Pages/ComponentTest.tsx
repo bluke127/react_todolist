@@ -1,29 +1,35 @@
 import DatePicker from "@/Components/DatePicker";
 import moment from "moment";
 import { U_DATE_FORMAT } from "../Constant";
-import Button from "@/Components/Button/index";
 import Input from "@/Components/Input";
 import StatusInput from "@/Components/Input/StatusInput";
-import { ChangeEvent, useCallback, useState, useRef } from "react";
+import { ChangeEvent, useCallback, useState, useId } from "react";
 import useReducer from "@/Hooks/useReducer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
 import CheckBox from "@/Components/Input/CheckBox";
 import DragNDrop from "@/Components/DragNDrop";
 import { DragNDropType } from "../Types";
+import Button from "@/Components/Button";
+import Modal from "@/Components/Modal";
+import { ShowModal } from './../Store/reducers/modal';
+import { AnyAction, Dispatch } from "redux";
 
 function ComponentTest() {
+  
+  const dispatch: Dispatch<AnyAction> = useDispatch();
   const { setPopup } = useReducer();
+  const id = useId();
   const [text, setText] = useState("");
   const [chkV, setChkV] = useState<boolean>(false);
   const [date1, setDate1] = useState<any>(moment().format(U_DATE_FORMAT));
   const [date2, setDate2] = useState<any>(moment().format(U_DATE_FORMAT));
   const [checkedList, setCheckedList] = useState<DragNDropType[]>([]);
   const [contentList, setContentList] = useState([
-    { content: "아이템1", contentId: 1, checked:false },
-    { content: "아이템2", contentId: 2, checked:true },
-    { content: "아이템3", contentId: 3, checked:true },
-    { content: "아이템4", contentId: 4, checked:false },
+    { content: "아이템1", contentId: 1, checked: false },
+    { content: "아이템2", contentId: 2, checked: true },
+    { content: "아이템3", contentId: 3, checked: true },
+    { content: "아이템4", contentId: 4, checked: false },
   ]);
   const onButtonClick = useCallback(() => {
     alert("onButtonClick");
@@ -40,7 +46,10 @@ function ComponentTest() {
     // },
     []
   );
-
+const handleShowModal = useCallback((e)=>{
+  alert(id)
+  dispatch(ShowModal(id))
+},[])
   return (
     <div>
       <ul>
@@ -110,7 +119,7 @@ function ComponentTest() {
         </li>
         <li>
           <p>체크박스</p>
-          <CheckBox onChange={onCheckBoxClick} value={chkV} />
+          <CheckBox onChange={onCheckBoxClick} value={chkV} checked={!!chkV} />
           {chkV}
         </li>
         <li>
@@ -119,6 +128,10 @@ function ComponentTest() {
             contentList={contentList}
             setContentList={setContentList}
           />
+        </li>
+        <li>
+          <Button onClick={handleShowModal}>모달</Button>
+          <Modal id={id}>sss</Modal>
         </li>
       </ul>
     </div>

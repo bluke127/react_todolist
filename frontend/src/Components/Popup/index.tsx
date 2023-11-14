@@ -31,9 +31,7 @@ export default function Popup() {
     <>
       {popupInfo.visible ? (
         <div className="relative w-full h-full bg-gray-400 flex-center">
-          <div
-            className="w-3/4 h-1/4 bg-white border-orange-500 flex flex-col justify-between"
-          >
+          <div className="w-3/4 h-1/4 bg-white border-orange-500 flex flex-col justify-between">
             <div className="w-full h-1/5 bg-orange-500 flex justify-between items-center px-2">
               <div className="text-white">{popupInfo.type}</div>
               <p onClick={onClose}>

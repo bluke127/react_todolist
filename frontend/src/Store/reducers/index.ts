@@ -2,5 +2,6 @@ import { combineReducers } from "redux";
 import { MediaQueryReducer } from "./mediaQuery";
 import { UtilsReducer } from "./utils";
 import { PopupReducer } from "./popup";
-const rootReducer = combineReducers({ MediaQueryReducer, UtilsReducer,PopupReducer });
+import { ModalReducer } from "./modal";
+const rootReducer = combineReducers({ MediaQueryReducer, UtilsReducer,PopupReducer, ModalReducer });
 export default rootReducer;
