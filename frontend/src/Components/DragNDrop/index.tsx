@@ -2,6 +2,7 @@ import { DragNDropType } from "@/Types/index";
 import { useCallback, useRef } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Item from "./Item";
+import useReducer from "@/Hooks/useReducer";
 
 function DragNDrop({
   contentList,
@@ -12,6 +13,8 @@ function DragNDrop({
 }: DragNDropType) {
   const dragItem = useRef();
   const dragOverItem = useRef();
+
+  const { setPopup } = useReducer();
   const dragStart = (idx) => {
     console.log(idx + "start");
     dragItem.current = idx;
@@ -44,6 +47,8 @@ function DragNDrop({
           arr.splice(idx, 1);
           return [...arr];
         });
+
+        setPopup("삭제되었습니다");
       }
     },
     [contentList]
