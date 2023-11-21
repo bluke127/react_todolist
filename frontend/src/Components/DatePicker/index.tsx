@@ -18,6 +18,7 @@ type PropType = {
   maxDate?: null | Date;
   alwaysOpen?: boolean;
   popperClassName?: string;
+  customInput?
 };
 const DatePicker = forwardRef((props: PropType, ref: any) => {
   let {
@@ -29,6 +30,7 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
     dateFormat = DATE_FORMAT as string,
     alwaysOpen = false,
     popperClassName="",
+    customInput
   } = props;
   const YEARS = Array.from(
     { length: getYear(new Date()) + 1 - 2000 },
@@ -104,6 +106,7 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
             </div>
           </div>
         )}
+        customInput={customInput}
       />
     </div>
   );

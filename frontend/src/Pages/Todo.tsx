@@ -1,6 +1,6 @@
-import { useEffect, useCallback, useRef, useState } from "react";
+import { useEffect, useCallback, useRef, useState, useMemo } from "react";
 import DatePicker from "@/Components/DatePicker";
-import { U_DATE_FORMAT } from "../Constant";
+import { DAYS, U_DATE_FORMAT } from "../Constant";
 import moment from "moment";
 import DragNDrop from "@/Components/DragNDrop";
 import Button from "@/Components/Button";
@@ -26,28 +26,29 @@ export function Todo() {
     setPlanList((arr) => {
       return [...saveData];
     });
-    debugger
     setCntId(cntForId + 1);
     setInsertValue("");
   }, [planList, insertValue]);
   const onSaveTodoList = useCallback(() => {
-    localStorage.setItem(selectedDate,JSON.stringify(planList))
+    localStorage.setItem(selectedDate, JSON.stringify(planList));
   }, [planList, insertValue]);
+  const selectDay=useMemo(()=>DAYS[moment(new Date(selectedDate)).day()],[selectedDate])
   return (
     <div className="red w-full h-full rounded border-solid border-2 border-indigo-600 overflow-y-scroll">
+      <div><Button>요일별 루틴</Button></div>
       <DatePicker
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
-        alwaysOpen={true}
         ref={datePicker}
-      ></DatePicker>
-      {JSON.stringify(planList)}
+        alwaysOpen={true}
+        customInput={<div  className="w-full">{`${selectedDate} (${selectDay})`}</div>}
+        ></DatePicker>
       <DragNDrop
         contentList={planList}
         setContentList={setPlanList}
         cotentClassName={"w-full"}
       ></DragNDrop>
-      {insertValue+"insertValue"}
+      {insertValue + "insertValue"}
       <Input
         value={insertValue}
         onChange={(e) => setInsertValue((e.target as HTMLInputElement).value)}
@@ -58,7 +59,6 @@ export function Todo() {
       <Button onClick={onSaveTodoList} className="w-full my-4 bg-emerald-200">
         저장
       </Button>
-      
     </div>
   );
 }
