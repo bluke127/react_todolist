@@ -27,6 +27,9 @@ body {
   top: 0;
   left: 0;
 }
+#popup_root{
+  z-index:2
+}
 body {
   scrollbar-base-color: #000;
   scrollbar-face-color: #000;

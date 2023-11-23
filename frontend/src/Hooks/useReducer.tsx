@@ -48,6 +48,9 @@ function useReducer() {
       })
     );
   }
-  return {setPopup}
+  function closePopup() {
+    dispatch(ClosePopup());
+  }
+  return { setPopup, closePopup };
 }
 export default useReducer;
