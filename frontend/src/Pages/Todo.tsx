@@ -56,22 +56,31 @@ export function Todo() {
   }, []);
   const handleCloseModal = useCallback((e) => {
     dispatch(CloseModal(id));
+    changeDate(selectedDate)
   }, []);
   const changeDate = useCallback((d) => {
     let _d = moment(d).format(U_DATE_FORMAT);
     setSelectedDate(_d);
-    let todo = localStorage.getItem(_d);
-    console.log(_d, todo, "eeeeeee");
-    if (todo) {
-      setPlanList((arr) => [...JSON.parse(todo)]);
-    } else {
-      setPlanList((arr) => []);
-    }
   }, []);
-  const selectDay = useMemo(
+  const selectedDay = useMemo(
     () => DAYS[moment(new Date(selectedDate)).day()],
     [selectedDate]
   );
+  useEffect(()=>{
+    let dayRoutine = JSON.parse(localStorage.getItem(selectedDay));
+    let todo = JSON.parse(localStorage.getItem(selectedDate));
+    let arr= []
+    if(dayRoutine){
+      setRoutinueList(arr=>[...dayRoutine])
+      arr.push(...dayRoutine)
+    }
+    if (todo) {
+      arr.push(...todo)
+    } 
+      setPlanList((_) => [...arr]);
+    
+    
+  },[selectedDate])
   useEffect(() => {
     changeDate(selectedDate);
   }, []);
@@ -79,7 +88,7 @@ export function Todo() {
     <div className="red w-full h-full rounded border-solid border-2 border-indigo-600 overflow-y-scroll">
       <Modal id={id} wrapperClassName={"w-3/4 h-4/5"}>
         <Routine
-          day={selectDay}
+          day={selectedDay}
           planList={routinueList}
           setPlanList={setRoutinueList}
           closeModal={handleCloseModal}
@@ -99,7 +108,7 @@ export function Todo() {
         ref={datePicker}
         alwaysOpen={true}
         customInput={
-          <div className="w-full">{`${selectedDate} (${selectDay})`}</div>
+          <div className="w-full">{`${selectedDate} (${selectedDay})`}</div>
         }
         onChange={changeDate}
       ></DatePicker>

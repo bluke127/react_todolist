@@ -39,6 +39,9 @@ function Routine({ day, planList, setPlanList, closeModal }) {
     let r=JSON.parse(localStorage.getItem(day))
     if(r&&r.length){
       setPlanList(arr=>[...r])
+    }else{
+      
+      setPlanList(_=>[])
     }
   }
   return (
@@ -48,9 +51,9 @@ function Routine({ day, planList, setPlanList, closeModal }) {
           <div
             className={
               "flex-1 text-center rounded-md " +
-              `${day === dayItem ? "bg-gray-900 text-white" : "bg-gray-400"}`
+              `${routineDay === dayItem ? "bg-gray-900 text-white" : "bg-gray-400"}`
             }
-            onClick={(day)=>onClickDay(day)}
+            onClick={()=>onClickDay(dayItem)}
           >
             <div className="w-full">{dayItem}</div>
           </div>
