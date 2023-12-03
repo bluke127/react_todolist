@@ -86,7 +86,9 @@ export function Todo() {
     let dayRoutine = JSON.parse(localStorage.getItem(selectedDay));
     let todo = JSON.parse(localStorage.getItem(selectedDate));
     let arr = [];
-    if (dayRoutine) {
+    
+    console.log(moment(new Date()).format("YYYY-MM-DD"),selectedDate,moment(new Date()).format("YYYY-MM-DD"),selectedDate,)
+    if (new Date().getTime()<=new Date(selectedDate).getTime()&&dayRoutine) {
       setRoutinueList((arr) => [...dayRoutine]);
       arr.push(...dayRoutine);
     }
