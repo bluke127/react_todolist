@@ -32,6 +32,8 @@ export interface DragNDropAttrType {
 export interface DragNDropType extends DragNDropAttrType {
   contentList: DragNDropItemType[];
   setContentList: any;
+  emptyMessage?: string;
+  wrapperClassName?: string;
 }
 export interface DragNDropItemType extends DragNDropAttrType {
   contentId?: string | number;
