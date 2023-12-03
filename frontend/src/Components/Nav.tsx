@@ -10,9 +10,10 @@ function Nav() {
   return (
     <>
       <div>mediaQuery : {mediaQuery}</div>
-      <div>Nav</div>
+      <div className="text-center flex justify-center items-center text-2xl font-black">
+        TODO LIST
+      </div>
     </>
-
   );
 }
 

@@ -84,31 +84,30 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
           prevMonthButtonDisabled,
           nextMonthButtonDisabled,
         }) => (
-          <div></div>
-          // <div className="flex justify-between items-center h-full py-1 px-5">
-          //   <div className="basis-1/2 flex">
-          //     <span className="basis-1/2">{MONTHS[getMonth(date)]}</span>
-          //     <select
-          //       value={getYear(date)}
-          //       className="basis-1/2 "
-          //       onChange={({ target: { value } }) => changeYear(+value)}
-          //     >
-          //       {YEARS.map((option) => (
-          //         <option key={option} value={option}>
-          //           {option}
-          //         </option>
-          //       ))}
-          //     </select>
-          //   </div>
-          //   <div>
-          //     <Button onClick={decreaseMonth} className="monthButton">
-          //       &lt;
-          //     </Button>
-          //     <Button onClick={increaseMonth} className="monthButton">
-          //       &gt;
-          //     </Button>
-          //   </div>
-          // </div>
+          <div className="flex justify-between items-center h-full py-1 px-5">
+            <div className="basis-1/2 flex">
+              <span className="basis-1/2">{MONTHS[getMonth(date)]}</span>
+              <select
+                value={getYear(date)}
+                className="basis-1/2 "
+                onChange={({ target: { value } }) => changeYear(+value)}
+              >
+                {YEARS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Button onClick={decreaseMonth} className="monthButton">
+                &lt;
+              </Button>
+              <Button onClick={increaseMonth} className="monthButton">
+                &gt;
+              </Button>
+            </div>
+          </div>
         )}
         customInput={customInput}
       />

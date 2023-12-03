@@ -1,3 +1,14 @@
+
+//customInput없을때
+.react-datepicker__input-container{
+  /* display:none !important; */
+  height:0px !important;
+  overflow:hidden;
+}
+.no_input .react-datepicker-wrapper{
+  background-color:#f00;
+  height:0px !important;
+}
 .react-datepicker-popper,
 .react-datepicker {
   width: 100%;
