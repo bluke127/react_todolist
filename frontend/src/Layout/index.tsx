@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 function index() {
   return (
     <div className="layout_color w-full h-full flex flex-col justify-between">
-      <div className="basis-1/6">
+      <div className="basis-1/8">
         <Header></Header>
       </div>
       <div className="flex justify-center flex-grow">
@@ -14,7 +14,7 @@ function index() {
           <Outlet />
         </div>
       </div>
-      <div className="basis-1/6">
+      <div className="basis-1/8">
         <Footer></Footer>
       </div>
     </div>

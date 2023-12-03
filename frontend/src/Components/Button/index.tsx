@@ -32,7 +32,7 @@ function Button(props: PropsType) {
   }, []);
   return (
     <button
-      className={className}
+      className={className+" rounded"}
       ref={buttonRef}
       style={style}
       onClick={isDebouncedButton ? debounce(onClick, 500) : onClick}

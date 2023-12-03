@@ -18,7 +18,8 @@ type PropType = {
   maxDate?: null | Date;
   alwaysOpen?: boolean;
   popperClassName?: string;
-  customInput?
+  customInput?,
+  className?:string
 };
 const DatePicker = forwardRef((props: PropType, ref: any) => {
   let {
@@ -30,7 +31,8 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
     dateFormat = DATE_FORMAT as string,
     alwaysOpen = false,
     popperClassName="",
-    customInput
+    customInput,
+    className=""
   } = props;
   const YEARS = Array.from(
     { length: getYear(new Date()) + 1 - 2000 },
@@ -60,12 +62,13 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
         });
   };
   return (
-    <div className="w-full relative">
+    <div className="w-full h-full">
       <_DatePicker
         ref={ref}
         locale={ko}
+        showPopperArrow={false}
         open={alwaysOpen || undefined}
-        className="w-full"
+        className={"w-full"}
         dateFormat={dateFormat} // 날짜 형태
         shouldCloseOnSelect={!alwaysOpen} // 날짜를 선택하면 datepicker가 자동으로 닫힘
         minDate={minDate} // minDate 이전 날짜 선택 불가
@@ -81,30 +84,31 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
           prevMonthButtonDisabled,
           nextMonthButtonDisabled,
         }) => (
-          <div className="flex justify-between items-center bg-white h-full py-1 px-5">
-            <div className="basis-1/2 flex">
-              <span className="basis-1/2 ">{MONTHS[getMonth(date)]}</span>
-              <select
-                value={getYear(date)}
-                className="basis-1/2 "
-                onChange={({ target: { value } }) => changeYear(+value)}
-              >
-                {YEARS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <Button onClick={decreaseMonth} className="monthButton">
-                &lt;
-              </Button>
-              <Button onClick={increaseMonth} className="monthButton">
-                &gt;
-              </Button>
-            </div>
-          </div>
+          <div></div>
+          // <div className="flex justify-between items-center h-full py-1 px-5">
+          //   <div className="basis-1/2 flex">
+          //     <span className="basis-1/2">{MONTHS[getMonth(date)]}</span>
+          //     <select
+          //       value={getYear(date)}
+          //       className="basis-1/2 "
+          //       onChange={({ target: { value } }) => changeYear(+value)}
+          //     >
+          //       {YEARS.map((option) => (
+          //         <option key={option} value={option}>
+          //           {option}
+          //         </option>
+          //       ))}
+          //     </select>
+          //   </div>
+          //   <div>
+          //     <Button onClick={decreaseMonth} className="monthButton">
+          //       &lt;
+          //     </Button>
+          //     <Button onClick={increaseMonth} className="monthButton">
+          //       &gt;
+          //     </Button>
+          //   </div>
+          // </div>
         )}
         customInput={customInput}
       />
