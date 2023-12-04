@@ -26,6 +26,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  z-index:11
 }
 #popup_root{
   z-index:2

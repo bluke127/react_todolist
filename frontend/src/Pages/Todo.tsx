@@ -150,12 +150,12 @@ export function Todo() {
           </span>
           달력 고정
         </span> */}
-        <div className={`w-full h-full relative`}>
+        <div className={`w-full h-full relative z-10`}>
           {isShowDatePicker ? (
             <div
               // ref={datePickerWrappper}
               className={
-                "w-full absolute top-0 bg-[#F0F0F0] overflow-hidden no_input"
+                "w-full absolute top-0 bg-[#F0F0F0] overflow-hidden z-10 no_input"
               }
               // onMouseEnter={(_) => setFixing(true)}
               // onMouseLeave={(_) => setFixing(false)}

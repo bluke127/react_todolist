@@ -8,6 +8,7 @@
 .no_input .react-datepicker-wrapper{
   background-color:#f00;
   height:0px !important;
+  display:block
 }
 .react-datepicker-popper,
 .react-datepicker {
