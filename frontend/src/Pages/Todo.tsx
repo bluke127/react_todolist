@@ -65,12 +65,20 @@ export function Todo() {
   }, [planList, insertValue]);
   //요일별 루틴에서 모달띄우기
   const handleShowModal = useCallback((e) => {
+    let r = JSON.parse(localStorage.getItem(selectedDate));
+    if (r && r.length) {
+      setPlanList((arr) => [...r]);
+    } else {
+      setPlanList((_) => []);
+    }
     dispatch(ShowModal(id));
-  }, []);
+  }, [selectedDate]);
   //요일별 루틴 모달을 닫고 실행시킬함수
   const handleCloseModal = useCallback((e) => {
     dispatch(CloseModal(id));
     changeDate(selectedDate);
+    
+    setRoutine()
   }, []);
   //날짜 변경
   const changeDate = useCallback((d) => {
@@ -83,12 +91,21 @@ export function Todo() {
     [selectedDate]
   );
   useEffect(() => {
+    setRoutine()
+  }, [selectedDate]);
+  useEffect(() => {
+    changeDate(selectedDate);
+    console.log(datePickerWrappper);
+  }, []);
+  
+  const [cntForId, setCntId] = useState(0);
+  const setRoutine=useCallback(()=>{
     let dayRoutine = JSON.parse(localStorage.getItem(selectedDay));
     let todo = JSON.parse(localStorage.getItem(selectedDate));
     let arr = [];
-    
-    console.log(moment(new Date()).format("YYYY-MM-DD"),selectedDate,moment(new Date()).format("YYYY-MM-DD"),selectedDate,)
-    if (new Date().getTime()<=new Date(selectedDate).getTime()&&dayRoutine) {
+    let today=moment(new Date()).format("YYYY-MM-DD")
+    console.log(new Date(today).getTime(),new Date(selectedDate).getTime(),)
+    if (new Date(today).getTime()<=new Date(selectedDate).getTime()&&dayRoutine) {
       setRoutinueList((arr) => [...dayRoutine]);
       arr.push(...dayRoutine);
     }
@@ -97,13 +114,7 @@ export function Todo() {
     }
     setPlanList((_) => [...arr]);
     setIsShowDatePicker(false);
-  }, [selectedDate]);
-  useEffect(() => {
-    changeDate(selectedDate);
-    console.log(datePickerWrappper);
-  }, []);
-
-  const [cntForId, setCntId] = useState(0);
+  },[selectedDay,selectedDate])
   // useEventListener("focusout", closeDatePicker, datePickerWrappper.current);
   return (
     <div className="red w-full h-full flex-col flex">
@@ -115,14 +126,15 @@ export function Todo() {
           closeModal={handleCloseModal}
         ></Routine>
       </Modal>
-      <div className="relative my-4 p-3 text-center flex">
+      <div className="my-4 p-3 text-center flex md:flex-col sm:flex-col">
+        <div className="basis-1/4  md:hidden sm:hidden"></div>
         <div
-          className="text-xl  justify-center content-center font-black"
+          className="text-xl grow justify-center content-center font-black"
           onClick={(_) => setIsShowDatePicker(true)}
         >
           {`${selectedDate} (${selectedDay})`}
         </div>
-        <div className="absolute top-0 right-2">
+        <div className="basis-1/4">
           <Button
             className="p-3  ml-2 bg-emerald-200 inline"
             onClick={handleShowModal}

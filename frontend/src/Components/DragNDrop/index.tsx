@@ -11,7 +11,7 @@ function DragNDrop({
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
-  emptyMessage,
+  emptyMessage="할일을 추가해주세요",
 }: DragNDropType) {
   const dragItem = useRef();
   const dragOverItem = useRef();
@@ -78,9 +78,9 @@ function DragNDrop({
                 checkboxReadonly={checkboxReadonly}
                 contentReadonly={contentReadonly}
               />
-              <div className="basis-[5%] justify-center flex">
+              <div className="basis-[5%] md:basis-[10%] sm:basis-[10%] justify-center flex">
                 <MdOutlineDeleteOutline
-                  className="w-3/4 h-fit"
+                  className="w-3/4 h-fit md:w-full md:h-full sm:w-full sm:h-full"
                   onClick={() => setContent("_", "delete", index)}
                 />
               </div>

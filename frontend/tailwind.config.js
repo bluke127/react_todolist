@@ -3,6 +3,11 @@ module.exports = {
   important: true,
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screens: {
+      sm: { min: "310px", max: "540px" },
+      md: { min: "540px", max: "1024px" },
+    },
+
     extend: {
       colors: {
         //Primary

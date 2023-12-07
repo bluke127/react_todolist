@@ -1,5 +1,5 @@
 import DragNDrop from "@/Components/DragNDrop";
-import { Dispatch, useCallback, useState } from "react";
+import { Dispatch, useCallback, useEffect, useState } from "react";
 import { DAYS } from "../Constant";
 import Input from "@/Components/Input";
 import Button from "@/Components/Button";
@@ -34,7 +34,7 @@ function Routine({ day, planList, setPlanList, closeModal }) {
       },
     });
   }, [planList, insertValue]);
-  const onClickDay = (day) => {
+  const onClickDay = useCallback((day) => {
     setRoutineDay(day);
     let r = JSON.parse(localStorage.getItem(day));
     if (r && r.length) {
@@ -42,7 +42,10 @@ function Routine({ day, planList, setPlanList, closeModal }) {
     } else {
       setPlanList((_) => []);
     }
-  };
+  },[]);
+  useEffect(()=>{
+    onClickDay(routineDay)
+  },[routineDay])
   return (
     <div className="w-4/5 h-4/5 flex flex-col">
       <div className="flex justify-end">
