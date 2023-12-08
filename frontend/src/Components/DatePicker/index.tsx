@@ -99,7 +99,7 @@ const DatePicker = forwardRef((props: PropType, ref: any) => {
                 ))}
               </select>
             </div>
-            <div>
+            <div  className="basis-1/3 flex justify-around">
               <Button onClick={decreaseMonth} className="monthButton">
                 &lt;
               </Button>

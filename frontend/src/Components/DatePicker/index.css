@@ -55,14 +55,14 @@
 }
 
 .monthButton {
-  width: 34px;
-  height: 34px;
-  padding: 5px;
+  width: 30%;
+  height: auto;
+  /* padding: 5px; */
   border-radius: 50%;
 }
-.monthButton {
+/* .monthButton {
   margin-left: 24px;
-}
+} */
 
 .monthButton :hover {
   background-color: rgba(#eee, 0.08);

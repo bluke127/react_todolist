@@ -20,7 +20,6 @@ import { ShowModal, CloseModal } from "@/Store/reducers/modal";
 import useReducer from "./../Hooks/useReducer";
 import { MdAutoFixOff, MdAutoFixNormal } from "react-icons/md";
 import Routine from "./Routine";
-import useEventListener from "./../Hooks/useEventListener";
 
 export function Todo() {
   const id = useId(); //아이디
@@ -29,8 +28,6 @@ export function Todo() {
   const datePicker = useRef(); //달력
   const datePickerWrappper = useRef(null);
   const [isShowDatePicker, setIsShowDatePicker] = useState(false);
-  // const [isFixDatePicker, setIsFixDatePicker] = useState(false);
-  // const [fixing, setFixing] = useState(true); //focusout할때 고정이미지에 클릭시에도 focusout으로 인식, 방지 플레그
   const [selectedDate, setSelectedDate] = useState<any>(
     moment().format(U_DATE_FORMAT)
   ); //날짜
@@ -38,10 +35,6 @@ export function Todo() {
   const [routinueList, setRoutinueList] = useState([]);
 
   const [insertValue, setInsertValue] = useState("");
-  // let closeDatePicker = (e) => {
-  //   console.log("????", e);
-  //   if (!isFixDatePicker && !fixing) setIsShowDatePicker(false);
-  // };
   //추가
   const onAddTodoList = useCallback(() => {
     let saveData = [...planList];
