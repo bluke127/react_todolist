@@ -21,7 +21,7 @@ import { useDispatch } from "react-redux";
 import { ShowModal, CloseModal } from "@/Store/reducers/modal";
 import useReducer from "./../Hooks/useReducer";
 import { MdAutoFixOff, MdAutoFixNormal } from "react-icons/md";
-import Routine from "./Routine";
+import Routine from "@/Pages/Routine";
 import { DragNDropItemType } from "@/Types/index";
 
 export function Todo() {
