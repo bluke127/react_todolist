@@ -6,14 +6,13 @@ const INITIAL_MODAL_INFO = {
   // visible: false,
 };
 
-export const ShowModal = (id: any) => {
-  console.log("rrrrr", { [id]: { visible: true } });
+export const ShowModal = (id: string) => {
   return {
     type: `MODAL/Setting`,
     payload: { [id]: { visible: true } },
   };
 };
-export const CloseModal = (id: any) => {
+export const CloseModal = (id: string) => {
   return {
     type: `MODAL/Setting`,
     payload: { [id]: { visible: false } },

@@ -38,6 +38,14 @@ function useReducer() {
             await btnFunc();
           },
         };
+      } else {
+        return {
+          word: "취소",
+          func: async () => {
+            dispatch(ClosePopup());
+            await btnFunc();
+          },
+        };
       }
     });
     dispatch(

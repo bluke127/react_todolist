@@ -1,12 +1,27 @@
 import DragNDrop from "@/Components/DragNDrop";
-import { Dispatch, useCallback, useEffect, useState } from "react";
-import { DAYS } from "../Constant";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { DAYS } from "@/Constant/index";
 import Input from "@/Components/Input";
 import Button from "@/Components/Button";
 import useReducer from "@/Hooks/useReducer";
-import { ClosePopup } from "@/Store/reducers/popup";
-import { AnyAction } from "redux";
-function Routine({ day, planList, setPlanList, closeModal }) {
+import { DragNDropItemType } from "../Types";
+function Routine({
+  day,
+  planList,
+  setPlanList,
+  closeModal,
+}: {
+  day: string;
+  planList: DragNDropItemType[];
+  setPlanList: Dispatch<SetStateAction<DragNDropItemType[]>>;
+  closeModal: Function;
+}) {
   const [insertValue, setInsertValue] = useState("");
   const { setPopup, closePopup } = useReducer();
   const [routineDay, setRoutineDay] = useState(day);
@@ -34,22 +49,25 @@ function Routine({ day, planList, setPlanList, closeModal }) {
       },
     });
   }, [planList, insertValue]);
-  const onClickDay = useCallback((day) => {
+  const onClickDay = useCallback((day: string) => {
     setRoutineDay(day);
-    let r = JSON.parse(localStorage.getItem(day));
+    let r = JSON.parse(localStorage.getItem(day) as string);
     if (r && r.length) {
-      setPlanList((arr) => [...r]);
+      setPlanList(() => [...r]);
     } else {
-      setPlanList((_) => []);
+      setPlanList(() => []);
     }
-  },[]);
-  useEffect(()=>{
-    onClickDay(routineDay)
-  },[routineDay])
+  }, []);
+  useEffect(() => {
+    onClickDay(routineDay);
+  }, [routineDay]);
   return (
     <div className="w-4/5 h-4/5 flex flex-col">
       <div className="flex justify-end">
-        <Button onClick={onSaveTodoList} className="px-3 py-1 my-4 bg-emerald-200 rounded">
+        <Button
+          onClick={onSaveTodoList}
+          className="px-3 py-1 my-4 bg-emerald-200 rounded"
+        >
           저장
         </Button>
       </div>

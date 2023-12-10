@@ -1,16 +1,22 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, MouseEventHandler, useRef } from "react";
 import CSS from "csstype";
 type PropsType = {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler;
   style?: CSS.Properties;
   children: React.ReactNode;
   isDebouncedButton?: boolean;
-  className?:string
+  className?: string;
 };
 function Button(props: PropsType) {
   //props
   // onClick, style, children : 버튼 내용, isDebouncedButton : 디바운스 할 버튼인지
-  const { onClick, style, children, className,isDebouncedButton = true } = props;
+  const {
+    onClick,
+    style,
+    children,
+    className,
+    isDebouncedButton = true,
+  } = props;
   //useRef
   const buttonRef = useRef(null);
   let timeout: number | ReturnType<typeof setTimeout>;
@@ -32,10 +38,14 @@ function Button(props: PropsType) {
   }, []);
   return (
     <button
-      className={className+" rounded"}
+      className={className + " rounded"}
       ref={buttonRef}
       style={style}
-      onClick={isDebouncedButton ? debounce(onClick, 500) : onClick}
+      onClick={
+        isDebouncedButton
+          ? debounce(onClick as MouseEventHandler, 500)
+          : onClick
+      }
     >
       {children}
     </button>

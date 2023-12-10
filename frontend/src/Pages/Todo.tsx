@@ -6,6 +6,8 @@ import {
   useMemo,
   useId,
   Dispatch,
+  SetStateAction,
+  SyntheticEvent,
 } from "react";
 import DatePicker from "@/Components/DatePicker";
 import { DAYS, U_DATE_FORMAT } from "../Constant";
@@ -20,6 +22,7 @@ import { ShowModal, CloseModal } from "@/Store/reducers/modal";
 import useReducer from "./../Hooks/useReducer";
 import { MdAutoFixOff, MdAutoFixNormal } from "react-icons/md";
 import Routine from "./Routine";
+import { DragNDropItemType } from "@/Types/index";
 
 export function Todo() {
   const id = useId(); //아이디
@@ -28,24 +31,34 @@ export function Todo() {
   const datePicker = useRef(); //달력
   const datePickerWrappper = useRef(null);
   const [isShowDatePicker, setIsShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<any>(
+  const [selectedDate, setSelectedDate] = useState<string>(
     moment().format(U_DATE_FORMAT)
   ); //날짜
-  const [planList, setPlanList] = useState([]);
-  const [routinueList, setRoutinueList] = useState([]);
+  const [planList, setPlanList]: [
+    DragNDropItemType[],
+    Dispatch<SetStateAction<DragNDropItemType[]>>
+  ] = useState<DragNDropItemType[]>([]);
+  const [routinueList, setRoutinueList]: [
+    DragNDropItemType[],
+    Dispatch<SetStateAction<DragNDropItemType[]>>
+  ] = useState<DragNDropItemType[]>([]);
 
-  const [insertValue, setInsertValue] = useState("");
+  const [insertValue, setInsertValue]: [
+    string,
+    Dispatch<SetStateAction<string>>
+  ] = useState("");
   //추가
   const onAddTodoList = useCallback(() => {
-    let saveData = [...planList];
+    let saveData: DragNDropItemType[] = [...planList];
+    let insertData: DragNDropItemType = {
+      content: insertValue,
+      contentId: cntForId,
+      checked: false,
+    };
     if (insertValue) {
-      saveData.push({
-        content: insertValue,
-        contentId: cntForId,
-        checked: false,
-      });
+      saveData.push(insertData);
     }
-    setPlanList((arr) => {
+    setPlanList(() => {
       return [...saveData];
     });
     setCntId(cntForId + 1);
@@ -57,8 +70,8 @@ export function Todo() {
     setPopup("저장되었습니다");
   }, [planList, insertValue]);
   //요일별 루틴에서 모달띄우기
-  const handleShowModal = useCallback((e) => {
-    let r = JSON.parse(localStorage.getItem(selectedDate));
+  const handleShowModal = useCallback(() => {
+    let r = JSON.parse(localStorage.getItem(selectedDate) as string);
     if (r && r.length) {
       setPlanList((arr) => [...r]);
     } else {
@@ -67,14 +80,13 @@ export function Todo() {
     dispatch(ShowModal(id));
   }, [selectedDate]);
   //요일별 루틴 모달을 닫고 실행시킬함수
-  const handleCloseModal = useCallback((e) => {
+  const handleCloseModal = useCallback((d:Date) => {
     dispatch(CloseModal(id));
-    changeDate(selectedDate);
-    
-    setRoutine()
+    changeDate(new Date(selectedDate));
+    setRoutine();
   }, []);
   //날짜 변경
-  const changeDate = useCallback((d) => {
+  const changeDate = useCallback((d:Date,e?: SyntheticEvent<any, Event>) => {
     let _d = moment(d).format(U_DATE_FORMAT);
     setSelectedDate(_d);
   }, []);
@@ -84,21 +96,23 @@ export function Todo() {
     [selectedDate]
   );
   useEffect(() => {
-    setRoutine()
+    setRoutine();
   }, [selectedDate]);
   useEffect(() => {
-    changeDate(selectedDate);
+    changeDate(new Date(selectedDate));
     console.log(datePickerWrappper);
   }, []);
-  
+
   const [cntForId, setCntId] = useState(0);
-  const setRoutine=useCallback(()=>{
-    let dayRoutine = JSON.parse(localStorage.getItem(selectedDay));
-    let todo = JSON.parse(localStorage.getItem(selectedDate));
-    let arr = [];
-    let today=moment(new Date()).format("YYYY-MM-DD")
-    console.log(new Date(today).getTime(),new Date(selectedDate).getTime(),)
-    if (new Date(today).getTime()<=new Date(selectedDate).getTime()&&dayRoutine) {
+  const setRoutine = useCallback(() => {
+    let dayRoutine = JSON.parse(localStorage.getItem(selectedDay) as string);
+    let todo = JSON.parse(localStorage.getItem(selectedDate) as string);
+    let arr: DragNDropItemType[] = [];
+    let today = moment(new Date()).format("YYYY-MM-DD");
+    if (
+      new Date(today).getTime() <= new Date(selectedDate).getTime() &&
+      dayRoutine
+    ) {
       setRoutinueList((arr) => [...dayRoutine]);
       arr.push(...dayRoutine);
     }
@@ -107,8 +121,7 @@ export function Todo() {
     }
     setPlanList((_) => [...arr]);
     setIsShowDatePicker(false);
-  },[selectedDay,selectedDate])
-  // useEventListener("focusout", closeDatePicker, datePickerWrappper.current);
+  }, [selectedDay, selectedDate]);
   return (
     <div className="red w-full h-full flex-col flex">
       <Modal id={id} wrapperClassName={"w-3/4 h-4/5"}>
@@ -143,32 +156,16 @@ export function Todo() {
         </div>
       </div>
       <div className="grow">
-        {/* <span className="flex w-full">
-          <span
-            onClick={(_) => {
-              _.preventDefault();
-              _.stopPropagation();
-              setIsFixDatePicker((v) => !v);
-            }}
-          >
-            {isFixDatePicker ? <MdAutoFixNormal /> : <MdAutoFixOff />}
-          </span>
-          달력 고정
-        </span> */}
         <div className={`w-full h-full relative z-10`}>
           {isShowDatePicker ? (
             <div
-              // ref={datePickerWrappper}
               className={
                 "w-full absolute top-0 bg-[#F0F0F0] overflow-hidden z-10 no_input"
               }
-              // onMouseEnter={(_) => setFixing(true)}
-              // onMouseLeave={(_) => setFixing(false)}
             >
               <DatePicker
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
-                ref={datePicker}
                 alwaysOpen={isShowDatePicker}
                 customInput={<div></div>}
                 onChange={changeDate}

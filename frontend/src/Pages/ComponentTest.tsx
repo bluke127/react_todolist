@@ -36,17 +36,15 @@ function ComponentTest() {
   }, []);
 
   const onCheckBoxClick = useCallback(
-    (e) =>
-      // alert((e.target as HTMLInputElement).checked);
+    (e:Event) =>
       setChkV((v) => {
         v = (e.target as HTMLInputElement).checked;
-        alert(v + "vv");
+        alert(v);
         return v;
       }),
-    // },
     []
   );
-const handleShowModal = useCallback((e)=>{
+const handleShowModal = useCallback(()=>{
   alert(id)
   dispatch(ShowModal(id))
 },[])
@@ -78,7 +76,6 @@ const handleShowModal = useCallback((e)=>{
             placeholder="search..."
             value={text}
             onChange={(e: ChangeEvent) => {
-              console.log(e, "eeee");
               setText(e.target ? (e.target as HTMLInputElement).value : "");
             }}
           />
@@ -111,7 +108,11 @@ const handleShowModal = useCallback((e)=>{
           <p>팝업</p>
           <Button
             onClick={() =>
-              setPopup("팝업", { Confirm: () => {}, Cancel: () => {} })
+              setPopup("팝업", { Confirm: () => {
+                alert("confirm")
+              }, Cancel: () => {
+                alert("cancel")
+              } })
             }
           >
             팝업
@@ -119,7 +120,7 @@ const handleShowModal = useCallback((e)=>{
         </li>
         <li>
           <p>체크박스</p>
-          <CheckBox onChange={onCheckBoxClick} value={chkV} checked={!!chkV} />
+          <CheckBox onChange={(e)=>onCheckBoxClick} value={chkV} checked={!!chkV} />
           {chkV}
         </li>
         <li>
@@ -131,7 +132,7 @@ const handleShowModal = useCallback((e)=>{
         </li>
         <li>
           <Button onClick={handleShowModal}>모달</Button>
-          <Modal id={id}>sss</Modal>
+          <Modal id={id}>모달컨텐트</Modal>
         </li>
       </ul>
     </div>

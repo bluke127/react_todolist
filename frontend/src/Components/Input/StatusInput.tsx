@@ -1,19 +1,24 @@
-import React, { useId,ChangeEventHandler, useEffect, useMemo, useRef } from "react";
+import React, {
+  useId,
+  ChangeEventHandler,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Input from "@/Components/Input/index";
-// import "@/styles/components/Input/StatusInput.scss";
 import { InputType } from "src/Types";
 import { useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
 interface PropsType extends InputType {
-  validation?: RegExp;
-  onClear?: Function | ChangeEventHandler;
+  validation?: RegExp; //정규식
+  onClear?: Function | ChangeEventHandler; //값 클리어
 }
 export default function StatusInput(props: PropsType) {
-  const uniqueId = useId();
+  const uniqueId = useId(); //element 고유한 id / clear할 input세팅에 필요
   //props
   const {
-    id=uniqueId,
+    id = uniqueId,
     value = "",
     onChange,
     style,
@@ -22,22 +27,17 @@ export default function StatusInput(props: PropsType) {
     validation,
     onClear = () => {
       (onChange as Function)("");
-      (InputRef?.current as HTMLInputElement).value=""
+      (InputRef?.current! as HTMLInputElement).value = "";
     },
     label,
     readonly,
-    className
+    className,
   } = props;
   //useRef
-  const InputRef = useRef();
+  const InputRef = useRef(null);
   const targetInputId: string = useSelector((s: ReducerType) => {
     return s.UtilsReducer.FOCUS_TARGET as string;
   });
-  //useContext
-  // const {
-  //   state: { target },
-  //   action: Aaction,
-  // } = UseUtilsContext(); //현재 타겟이 이 element면 reset button이 보이도록
   //useMemo
   const passValidation = useMemo(() => {
     return validation?.test(value as string);
@@ -55,15 +55,19 @@ export default function StatusInput(props: PropsType) {
           type={type}
           placeholder={placeholder}
           ref={InputRef}
-          className={className+(passValidation ? " success" : " fail")}
+          className={className + (passValidation ? " success" : " fail")}
           readonly={readonly}
-          
         />
-        {targetInputId === (InputRef?.current as HTMLElement)?.id&&!readonly && (
-          <span className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 flex justify-center" onClick={()=>onClear()}>
-            <AiFillCloseCircle />
-          </span>
-         )} 
+        {/* 클리어 버튼 */}
+        {targetInputId === (InputRef?.current! as HTMLElement)?.id &&
+          !readonly && (
+            <span
+              className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 flex justify-center"
+              onClick={() => onClear()}
+            >
+              <AiFillCloseCircle />
+            </span>
+          )}
       </div>
     </div>
   );

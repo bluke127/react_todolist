@@ -3,7 +3,10 @@ import {
   KeyboardEventHandler,
   FormEvent,
   MouseEventHandler,
+  SyntheticEvent,
+  ReactNode
 } from "react";
+//인풋 타입
 export interface InputType {
   value?: string | number;
   defaultValue?: string | number;
@@ -24,6 +27,21 @@ export interface InputType {
   accept?: string;
   readonly?: boolean;
 }
+//날짜
+export interface DateType {
+  onChange?: (date: Date, event: SyntheticEvent<any, Event>) => void;
+  selectedDate: string | null;
+  setSelectedDate?: Function;
+  
+  dateFormat?: string;
+  minDate?: null | Date;
+  maxDate?: null | Date;
+  alwaysOpen?: boolean;
+  popperClassName?: string;
+  customInput?: ReactNode | null;
+  className?: string;
+}
+//드래그앤 드랍
 export interface DragNDropAttrType {
   cotentClassName?: string;
   checkboxReadonly?: boolean;

@@ -10,9 +10,6 @@ export interface ReducerType {
 interface UtilsReducer {
   FOCUS_TARGET: unknown;
 }
-interface PopupReducer {
-  PopupType;
-}
 interface storeType {
   number: number;
 }

@@ -1,5 +1,5 @@
 //react
-import { forwardRef, ChangeEventHandler, RefObject } from "react";
+import { forwardRef, ForwardedRef, ChangeEventHandler, RefObject } from "react";
 import { useId } from "react";
 import { useEffect } from "react";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
@@ -18,7 +18,7 @@ export type PropsType = {
 };
 
 const CheckBox = forwardRef(
-  (props: PropsType, ref: RefObject<HTMLInputElement>) => {
+  (props: PropsType, ref: ForwardedRef<HTMLInputElement>) => {
     const uniqueId = useId();
     //props
     const {

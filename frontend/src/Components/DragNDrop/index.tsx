@@ -1,4 +1,4 @@
-import { DragNDropType } from "@/Types/index";
+import { DragNDropItemType, DragNDropType } from "@/Types/index";
 import { useCallback, useRef } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Item from "./Item";
@@ -11,18 +11,22 @@ function DragNDrop({
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
-  emptyMessage="할일을 추가해주세요",
+  emptyMessage = "할일을 추가해주세요",
 }: DragNDropType) {
-  const dragItem = useRef();
-  const dragOverItem = useRef();
+  type itemKeyType = keyof Pick<
+    DragNDropItemType,
+    "contentId" | "content" | "checked"
+  >;
+  const dragItem = useRef<number | null>();
+  const dragOverItem = useRef<number | null>();
 
   const { setPopup } = useReducer();
-  const dragStart = (idx) => {
+  const dragStart = (idx: number) => {
     console.log(idx + "start");
     dragItem.current = idx;
   };
 
-  const dragEnter = (idx) => {
+  const dragEnter = (idx: number) => {
     console.log(idx + "enter");
     dragOverItem.current = idx;
   };
@@ -30,22 +34,22 @@ function DragNDrop({
   const drop = () => {
     const copyListItems = [...contentList];
     const dragItemConotent = copyListItems[dragItem.current as number];
-    copyListItems.splice(dragItem.current, 1);
-    copyListItems.splice(dragOverItem.current, 0, dragItemConotent);
+    copyListItems.splice(dragItem.current as number, 1);
+    copyListItems.splice(dragOverItem.current as number, 0, dragItemConotent);
     dragItem.current = null;
     dragOverItem.current = null;
     setContentList(copyListItems);
     console.log("드랍");
   };
   const setContent = useCallback(
-    (v, itemKey, idx) => {
+    (v: string | boolean, itemKey: itemKeyType | "delete", idx: number) => {
       if (itemKey !== "delete") {
-        setContentList((arr) => {
-          arr[idx][itemKey] = v;
+        setContentList((arr: itemKeyType[]) => {
+          (arr[idx] as any)[itemKey] = v;
           return [...arr];
         });
       } else {
-        setContentList((arr) => {
+        setContentList((arr: itemKeyType[]) => {
           arr.splice(idx, 1);
           return [...arr];
         });
@@ -71,7 +75,10 @@ function DragNDrop({
             >
               <Item
                 item={item}
-                setItem={(v, changeKey) => setContent(v, changeKey, index)}
+                setItem={(
+                  v: string | boolean,
+                  changeKey: itemKeyType & "delete"
+                ) => setContent(v, changeKey, index)}
                 cotentClassName={
                   cotentClassName + " focus:bg-white bg-transparent "
                 }

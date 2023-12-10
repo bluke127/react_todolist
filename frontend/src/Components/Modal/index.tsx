@@ -3,7 +3,7 @@ import React, {
   MouseEventHandler,
   useCallback,
   Dispatch,
-  useState,
+  ReactNode,
   useMemo,
   useId,
 } from "react";
@@ -13,9 +13,9 @@ import { ReducerType } from "@/Types/store";
 import { AnyAction } from "redux";
 import { CloseModal } from "@/Store/reducers/modal";
 import ModalPortal from "./ModalPortal";
-
-export default function Modal(props) {
-  const { id, children, wrapperClassName='w-3/4 h-1/4' }: { id; children; wrapperClassName? } = props;
+type PropType = { id: string; children: ReactNode; wrapperClassName?: string };
+export default function Modal(props: PropType) {
+  const { id, children, wrapperClassName = "w-3/4 h-1/4" } = props;
 
   const dispatch: Dispatch<AnyAction> = useDispatch();
   const modalInfo = useSelector((s: ReducerType) => {
@@ -30,10 +30,10 @@ export default function Modal(props) {
   }, [modalInfo]);
 
   useEffect(() => {
-    document.getElementById("modal_root").style.height = `${
+    document.getElementById("modal_root")!.style.height = `${
       visible ? window.innerHeight : 0
     }px`;
-    document.getElementById("modal_root").style.width = `${
+    document.getElementById("modal_root")!.style.width = `${
       visible ? window.innerWidth : 0
     }px`;
   }, [visible]);
@@ -42,7 +42,12 @@ export default function Modal(props) {
       {visible ? (
         <ModalPortal>
           <div className="relative w-full h-full bg-gray-400 flex-center">
-            <div className={wrapperClassName+ " bg-white border-orange-500 flex flex-col justify-between"}>
+            <div
+              className={
+                wrapperClassName +
+                " bg-white border-orange-500 flex flex-col justify-between"
+              }
+            >
               <div className="w-full h-20rem bg-orange-500 flex justify-between items-center px-2">
                 <div className="text-white">{}</div>
                 <p onClick={onClose}>

@@ -12,7 +12,7 @@ function Item({
   return (
     <>
       <CheckBox
-        value={item.contentId}
+        value={item.contentId ?? ""}
         readonly={checkboxReadonly}
         checked={item.checked}
         onChange={(e) => {

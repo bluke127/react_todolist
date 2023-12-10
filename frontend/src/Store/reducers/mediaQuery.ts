@@ -20,7 +20,7 @@ export const Mobile = {
 };
 export const MediaQueryReducer = (
   state = INITAIL_MEDIA_QUERY,
-  action: { type: string; media: any }
+  action: { type: string; media: string }
 ) => {
   switch (action.type) {
     case `MEDIAQUERY/${action.media}`:

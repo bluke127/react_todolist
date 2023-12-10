@@ -4,7 +4,6 @@ import React, {
   useCallback,
   Dispatch,
 } from "react";
-import { EnumType } from "typescript";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducerType } from "@/Types/store";
@@ -20,10 +19,10 @@ export default function Popup() {
     dispatch(ClosePopup());
   }, []);
   useEffect(() => {
-    document.getElementById("popup_root").style.height = `${
+    document.getElementById("popup_root")!.style.height = `${
       popupInfo.visible ? window.innerHeight : 0
     }px`;
-    document.getElementById("popup_root").style.width = `${
+    document.getElementById("popup_root")!.style.width = `${
       popupInfo.visible ? window.innerWidth : 0
     }px`;
   }, [popupInfo.visible]);
