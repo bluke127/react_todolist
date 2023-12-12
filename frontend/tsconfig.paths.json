@@ -10,7 +10,7 @@
       "@/Fonts/*": ["src/Assets/Fonts/*"],
       "@/Constant/*": ["src/Constant/*"],
       "@/Enum/*": ["src/Enum/*"],
-      "@/Types/*": ["src/Types/*"],
+      "@/Types/*": ["src/Types/*"]
     }
   }
 }
