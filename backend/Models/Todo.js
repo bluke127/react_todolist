@@ -14,6 +14,8 @@ export const Todo = sequelize.define("Todo", {
   },
   date: {
     type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
 });
 
@@ -27,7 +29,15 @@ export async function updateTodoData({ date, contentId, checked, content }) {
     updateContent({ contentId, checked, content });
   });
 }
-export async function getTodoData(date ) {
+export async function deleteTodoData({ date }) {
+  Todo.findOne({ where: { date } }).then((todo) => {
+    return todo.destroy()
+  });
+}
+export async function getContentData(date ) {
   return Content.findAll({ where: { date } })
+}
+export async function isExistTodo(date ) {
+  return await Todo.count({ where: { date } })
 }
 // Todo.hasMany(Content, { foreignKey: "date", sourceKey: "date" });

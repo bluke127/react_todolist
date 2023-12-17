@@ -5,8 +5,9 @@ import {
   createContent,
   deleteContent,
   findAllDateContent,
+  isExistContent,
 } from "../Models/Content.js";
-import { getTodoData } from "../Models/Todo.js";
+import { getContentData, deleteTodoData,createTodoData, isExistTodo } from "../Models/Todo.js";
 
 export async function cudTodo(req, res) {
   const data = req.body.data;
@@ -21,7 +22,7 @@ export async function cudTodo(req, res) {
     //잔존하지 않을 데이터는 삭제
     for (let data of allData) {
       if (!arr.includes(data.contentId)) {
-        await deleteContent({contentId:data.contentId});
+        await deleteContent({ contentId: data.contentId });
       }
     }
     for (let { contentId, checked, content, date } of data) {
@@ -32,7 +33,16 @@ export async function cudTodo(req, res) {
         await updateContent({ contentId, checked, content });
       }
     }
-    console.log("?????");
+    
+    console.log((await isExistContent({ date: forgDate }),"????"))
+    console.log((await isExistTodo(forgDate)),"!!!!")
+    if (!(await isExistContent({ date: forgDate }))) {
+      await deleteTodoData({ date: forgDate });
+      return res.status(200).json({ message: `${forgDate} 할일 저장 삭제` });
+    }
+    if (!(await isExistTodo(forgDate))) {
+      await createTodoData({ date: forgDate });
+    }
     return res.status(200).json("할일 저장 완료");
   } catch (error) {
     console.error("Error creating user:", error);
@@ -46,7 +56,7 @@ export const getTodo = async (req, res) => {
 
   try {
     console.log(date, "date");
-    const newTodo = await getTodoData(date);
+    const newTodo = await getContentData(date);
     return res.status(200).json(newTodo);
   } catch (error) {
     console.error("Error creating user:", error);
