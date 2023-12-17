@@ -7,7 +7,12 @@ import {
   findAllDateContent,
   isExistContent,
 } from "../Models/Content.js";
-import { getContentData, deleteTodoData,createTodoData, isExistTodo } from "../Models/Todo.js";
+import {
+  getContentData,
+  deleteTodoData,
+  createTodoData,
+  isExistTodo,
+} from "../Models/Todo.js";
 
 export async function cudTodo(req, res) {
   const data = req.body.data;
@@ -33,9 +38,9 @@ export async function cudTodo(req, res) {
         await updateContent({ contentId, checked, content });
       }
     }
-    
-    console.log((await isExistContent({ date: forgDate }),"????"))
-    console.log((await isExistTodo(forgDate)),"!!!!")
+
+    console.log((await isExistContent({ date: forgDate }), "????"));
+    console.log(await isExistTodo(forgDate), "!!!!");
     if (!(await isExistContent({ date: forgDate }))) {
       await deleteTodoData({ date: forgDate });
       return res.status(200).json({ message: `${forgDate} 할일 저장 삭제` });
@@ -57,7 +62,18 @@ export const getTodo = async (req, res) => {
   try {
     console.log(date, "date");
     let response = await getContentData(date);
-    response = response?{date,content:response.map(todo=>{return {content:todo.content,contentId:todo.content,checked:todo.completed}})}:[]
+    response = response
+      ? {
+          date,
+          content: response.map((todo) => {
+            return {
+              content: todo.content,
+              contentId: todo.id,
+              checked: todo.completed,
+            };
+          }),
+        }
+      : [];
     return res.status(200).json(response);
   } catch (error) {
     console.error("Error creating user:", error);
