@@ -40,4 +40,3 @@ export async function getContentData(date ) {
 export async function isExistTodo(date ) {
   return await Todo.count({ where: { date } })
 }
-// Todo.hasMany(Content, { foreignKey: "date", sourceKey: "date" });

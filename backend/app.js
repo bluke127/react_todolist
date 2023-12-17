@@ -1,5 +1,6 @@
 import express from "express"
 import TodoRoute from "./Routes/Todo.js"
+import RoutineRoute from "./Routes/Routine.js"
 import cors from "cors"
 import { sequelize } from "./Database/database.js";
 import dotenv from 'dotenv'; // dotenv 패키지를 사용하여 환경 변수 로드
@@ -25,6 +26,7 @@ sequelize.sync().then((client) => {
     // console.log(client,"client")
 });
 app.use(TodoRoute);
+app.use(RoutineRoute);
 app.get("/", (req, res) => {
   res.send("Hello, Node.js!");
 });
