@@ -20,7 +20,7 @@ app.use(
     credential: true, // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
   })
 );
-const port = 8800;
+const port = 8080;
 sequelize.sync().then((client) => {
     // console.log(client,"client")
 });

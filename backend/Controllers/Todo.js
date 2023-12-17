@@ -56,8 +56,9 @@ export const getTodo = async (req, res) => {
 
   try {
     console.log(date, "date");
-    const newTodo = await getContentData(date);
-    return res.status(200).json(newTodo);
+    let response = await getContentData(date);
+    response = response?{date,content:response.map(todo=>{return {content:todo.content,contentId:todo.content,checked:todo.completed}})}:[]
+    return res.status(200).json(response);
   } catch (error) {
     console.error("Error creating user:", error);
     res

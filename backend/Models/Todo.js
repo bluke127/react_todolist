@@ -35,7 +35,7 @@ export async function deleteTodoData({ date }) {
   });
 }
 export async function getContentData(date ) {
-  return Content.findAll({ where: { date } })
+  return Content.findAll({ where: { contentDate:date } })
 }
 export async function isExistTodo(date ) {
   return await Todo.count({ where: { date } })
