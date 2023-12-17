@@ -1,72 +1,55 @@
-import Todo from "../Models/Todo.js";
+// import { Todo } from "../Models/Todo.js";
+import {
+  updateContent,
+  getContent,
+  createContent,
+  deleteContent,
+  findAllDateContent,
+} from "../Models/Content.js";
+import { getTodoData } from "../Models/Todo.js";
 
-export const createTodo = async (req, res) => {
-  const { plan, planDate } = req.body;
-  console.log(new Date(planDate), "plan,planDate");
+export async function cudTodo(req, res) {
+  const data = req.body.data;
   try {
-    const newTodo = await Todo.create({
-      plan,
-      planDate: new Date(planDate),
-    });
-    res.json(newTodo);
+    let arr = []; //잔존할 데이터
+    let forgDate;
+    for (let { contentId, date } of data) {
+      forgDate = date;
+      arr.push(contentId);
+    }
+    let allData = await findAllDateContent(forgDate);
+    //잔존하지 않을 데이터는 삭제
+    for (let data of allData) {
+      if (!arr.includes(data.contentId)) {
+        await deleteContent({contentId:data.contentId});
+      }
+    }
+    for (let { contentId, checked, content, date } of data) {
+      console.log(allData, "alldata", data);
+      if (!(await getContent(contentId))) {
+        await createContent({ checked, content, contentDate: date });
+      } else {
+        await updateContent({ contentId, checked, content });
+      }
+    }
+    console.log("?????");
+    return res.status(200).json("할일 저장 완료");
   } catch (error) {
     console.error("Error creating user:", error);
     res
       .status(500)
       .json({ error: "Internal Server Error", message: error.message });
   }
-};
-
+}
 export const getTodo = async (req, res) => {
-  const { planDate } = req.query;
-  try {
-    const localDate = new Date(planDate);
-
-    // 로컬 시간대로 변환하는 함수
-    function convertToLocalTimezone(date) {
-      const offset = date.getTimezoneOffset();
-      date.setMinutes(date.getMinutes() - offset);
-      return date;
-    }
-
-    const localPlanDate = convertToLocalTimezone(localDate);
-    const planData = await Todo.findOne({
-      where: {
-        planDate: localPlanDate,
-      },
-    });
-    // console.log(planData, "planDataplanData");
-    if (planData) {
-      planData.plan = JSON.parse(planData.plan);
-    }
-    res.json({
-      result_code: 200,
-      message: "Success",
-      data: planData ?? [],
-    });
-  } catch (error) {
-    console.error("Error creating todo:", error);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", message: error.message });
-  }
-};
-
-export const updateTodo = async (req, res) => {
-  const { id, plan } = req.body;
+  const { date } = req.query;
 
   try {
-    const todo = await Todo.findByPk(id);
-    todo.plan = JSON.stringify(plan);
-    await todo.save();
-    console.log("User updated:", todo.toJSON());
-    res.json({
-      result_code: 200,
-      message: "Success",
-      data: todo.toJSON(),
-    });
+    console.log(date, "date");
+    const newTodo = await getTodoData(date);
+    return res.status(200).json(newTodo);
   } catch (error) {
-    console.error("Error creating todo:", error);
+    console.error("Error creating user:", error);
     res
       .status(500)
       .json({ error: "Internal Server Error", message: error.message });

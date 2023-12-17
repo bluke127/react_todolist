@@ -1,7 +1,7 @@
 import express from "express"
-import sequelize from "./Config/database.js";
 import TodoRoute from "./Routes/Todo.js"
 import cors from "cors"
+import { sequelize } from "./Database/database.js";
 import dotenv from 'dotenv'; // dotenv 패키지를 사용하여 환경 변수 로드
 dotenv.config();
 const app = express();
@@ -21,7 +21,6 @@ app.use(
   })
 );
 const port = 8800;
-console.log(process.env,sequelize,"@@@@@@@@@@@@@@@@")
 sequelize.sync().then((client) => {
     // console.log(client,"client")
 });
@@ -31,5 +30,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port} ${JSON.stringify(process.env.DB_HOST)}${process.env.DB_PASSWORD}`);
 });
