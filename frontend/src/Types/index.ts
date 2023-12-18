@@ -4,7 +4,7 @@ import {
   FormEvent,
   MouseEventHandler,
   SyntheticEvent,
-  ReactNode
+  ReactNode,
 } from "react";
 //인풋 타입
 export interface InputType {
@@ -32,7 +32,7 @@ export interface DateType {
   onChange?: (date: Date, event: SyntheticEvent<any, Event>) => void;
   selectedDate: string | null;
   setSelectedDate?: Function;
-  
+
   dateFormat?: string;
   minDate?: null | Date;
   maxDate?: null | Date;
@@ -76,4 +76,10 @@ export type PopupType = {
 //팝업이나 모달의 type
 export type ModalType = {
   [key: string]: { visible: boolean };
+};
+
+//axios type
+export type AxiosType = {
+  loading: boolean;
+  error: null | unknown;
 };

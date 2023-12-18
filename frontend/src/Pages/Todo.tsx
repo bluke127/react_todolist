@@ -23,6 +23,8 @@ import useReducer from "./../Hooks/useReducer";
 import { MdAutoFixOff, MdAutoFixNormal } from "react-icons/md";
 import Routine from "@/Pages/Routine";
 import { DragNDropItemType } from "@/Types/index";
+import { useTodoApi } from "@/Services/TodoApi";
+import { AxiosResponse } from "axios";
 
 export function Todo() {
   const id = useId(); //아이디
@@ -30,6 +32,7 @@ export function Todo() {
   const dispatch: Dispatch<AnyAction> = useDispatch();
   const datePicker = useRef(); //달력
   const datePickerWrappper = useRef(null);
+  const { getTodoApi, postTodoApi } = useTodoApi();
   const [isShowDatePicker, setIsShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
     moment().format(U_DATE_FORMAT)
@@ -80,13 +83,13 @@ export function Todo() {
     dispatch(ShowModal(id));
   }, [selectedDate]);
   //요일별 루틴 모달을 닫고 실행시킬함수
-  const handleCloseModal = useCallback((d:Date) => {
+  const handleCloseModal = useCallback((d: Date) => {
     dispatch(CloseModal(id));
     changeDate(new Date(selectedDate));
     setRoutine();
   }, []);
   //날짜 변경
-  const changeDate = useCallback((d:Date,e?: SyntheticEvent<any, Event>) => {
+  const changeDate = useCallback((d: Date, e?: SyntheticEvent<any, Event>) => {
     let _d = moment(d).format(U_DATE_FORMAT);
     setSelectedDate(_d);
   }, []);
@@ -100,13 +103,14 @@ export function Todo() {
   }, [selectedDate]);
   useEffect(() => {
     changeDate(new Date(selectedDate));
-    console.log(datePickerWrappper);
   }, []);
 
   const [cntForId, setCntId] = useState(0);
-  const setRoutine = useCallback(() => {
+  const setRoutine = useCallback(async () => {
     let dayRoutine = JSON.parse(localStorage.getItem(selectedDay) as string);
-    let todo = JSON.parse(localStorage.getItem(selectedDate) as string);
+    // let todo = JSON.parse(localStorage.getItem(selectedDate) as string);
+    let todo: any = await getTodoApi(selectedDate);
+    todo = todo.content;
     let arr: DragNDropItemType[] = [];
     let today = moment(new Date()).format("YYYY-MM-DD");
     if (
