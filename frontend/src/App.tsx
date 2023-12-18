@@ -45,7 +45,11 @@ function App() {
   }, []);
   return (
     <>
-      {axiosResult && axiosResult.loading ? <div>로딩중</div> : null}
+      {axiosResult && axiosResult.loading ? (
+        <div className="w-full h-full fixed top-0 left-0 z-50 bg-stone-400 flex justify-center items-center text-2xl">
+          로딩중
+        </div>
+      ) : null}
       <div
         className="App w-full h-full"
         onFocus={setTarget as FocusEventHandler}
