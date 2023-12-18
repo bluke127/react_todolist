@@ -30,7 +30,6 @@ const useAxiosHook = () => {
   });
   instance.interceptors.request.use(
     (config: any) => {
-      debugger;
 
       dispatch(SetAxiosResult("Loading"));
       return {

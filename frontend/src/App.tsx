@@ -9,9 +9,13 @@ import { useMediaQuery } from "react-responsive";
 import { redirect } from "react-router-dom";
 import { PopupPortal } from "./Components/Popup/PopupPortal";
 import Popup from "./Components/Popup";
+import { ReducerType } from "@/Types/store";
 
 function App() {
   const dispatch: Dispatch<AnyAction> = useDispatch();
+  const axiosResult = useSelector(
+    (state: ReducerType) => state.AxiosUtilsReducer
+  );
 
   const isDesktop: boolean = useMediaQuery({
     query: "(min-width:1024px)",
@@ -22,6 +26,7 @@ function App() {
   const isMobile: boolean = useMediaQuery({
     query: "(max-width:767px)",
   });
+
   useEffect(() => {
     dispatch(
       SetMediaQuery(isMobile ? "Mobile" : isTablet ? "Tablet" : "Desktop")
@@ -39,16 +44,20 @@ function App() {
     document.getElementById("root")!.style.height = `${window.innerHeight}px`;
   }, []);
   return (
-    <div
-      className="App w-full h-full"
-      onFocus={setTarget as FocusEventHandler}
-      onClick={setTarget as MouseEventHandler}
-    >
-      <Layout />
-      <PopupPortal>
-        <Popup />
-      </PopupPortal>
-    </div>
+    <>
+      {axiosResult && axiosResult.loading ? <div>로딩중</div> : null}
+      <div
+        className="App w-full h-full"
+        onFocus={setTarget as FocusEventHandler}
+        onClick={setTarget as MouseEventHandler}
+      >
+        {JSON.stringify(axiosResult) + "SSSSSSS"}
+        <Layout />
+        <PopupPortal>
+          <Popup />
+        </PopupPortal>
+      </div>
+    </>
   );
 }
 
