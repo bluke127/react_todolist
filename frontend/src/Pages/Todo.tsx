@@ -87,7 +87,6 @@ export function Todo() {
       });
       setPopup("저장되었습니다");
     } catch (e: any) {
-      // console.log(e);
       setPopup(e.message);
     }
   }, [planList, insertValue]);

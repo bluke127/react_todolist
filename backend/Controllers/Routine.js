@@ -36,7 +36,6 @@ export async function cudRoutine(req, res) {
     if (typeof data !== "string") {
       let index = 0;
       for (let { contentId, checked, content, day } of data) {
-        console.log(allData, "alldata", data);
         if (!(await getRoutineContent({ contentId }))) {
           await createRoutineContent({
             checked,
@@ -55,8 +54,6 @@ export async function cudRoutine(req, res) {
         index++;
       }
     }
-    console.log((await isExistRoutineContent({ day: forgDay }), "????"));
-    console.log(await isExistRoutine(forgDay), "!!!!");
     if (!(await isExistRoutineContent({ day: forgDay }))) {
       await deleteRoutineData({ day: forgDay });
       return res.status(200).json({ message: `${forgDay} 루틴 저장 삭제` });
@@ -77,7 +74,6 @@ export const getRoutine = async (req, res) => {
 
   try {
     let response = await getRoutineContentData(day);
-    console.log(day, response, "day");
     response = response
       ? {
           day,

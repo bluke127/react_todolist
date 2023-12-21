@@ -37,7 +37,6 @@ export async function createRoutineContent({
   contentDay,
   sort,
 }) {
-  console.log("creaate");
   return RoutineContent.create({
     completed: checked,
     content,
@@ -52,7 +51,6 @@ export async function updateRoutineContent({
   content,
   sort,
 }) {
-  console.log("update");
   const contentData = await RoutineContent.findByPk(contentId);
   if (contentData) {
     contentData.completed = checked;
@@ -69,7 +67,6 @@ export async function deleteRoutineContent({ contentId }) {
   }
 }
 export async function findAllDateRoutineContent(day) {
-  console.log(day, "sssss");
   const contentData = await RoutineContent.findAll({
     where: { contentDay: day },
   });
@@ -80,11 +77,5 @@ export async function getRoutineContent({ contentId }) {
   return RoutineContent.findByPk(contentId);
 }
 export async function isExistRoutineContent({ day }) {
-  console.log(
-    RoutineContent.count({ where: { contentDay: day } }),
-    !!(await RoutineContent.count({ where: { contentDay: day } })),
-
-    "ddddd"
-  );
   return await RoutineContent.count({ where: { contentDay: day } });
 }

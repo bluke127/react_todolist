@@ -39,7 +39,6 @@ function DragNDrop({
     dragItem.current = null;
     dragOverItem.current = null;
     setContentList(copyListItems);
-    console.log("드랍");
   };
   const setContent = useCallback(
     (v: string | boolean, itemKey: ItemKeyType | "delete", idx: number) => {

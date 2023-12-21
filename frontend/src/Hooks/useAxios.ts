@@ -21,7 +21,6 @@ const useAxiosHook = () => {
     let token = localStorage.getItem("token")
       ? localStorage.getItem("token")
       : sessionStorage.getItem("token");
-    console.log(token, "토큰");
     let Authorization = "Bearer " + token;
     axios.defaults.headers.common["Authorization"] = Authorization;
   });
@@ -44,11 +43,9 @@ const useAxiosHook = () => {
   instance.interceptors.response.use(
     (config: any) => {
       dispatch(SetAxiosResult("Success"));
-      console.log("interceptors.response:config", config);
       return config.data;
     },
     (error: any) => {
-      console.log("interceptors.response:error", error);
       dispatch(SetAxiosResult("Error"));
       if (error.response && error.response.status === 401) {
         // store.commit("needLogin", error.response.data);
@@ -66,7 +63,6 @@ const useAxiosHook = () => {
     },
     post: ({ url, query }: { url: string; query: any }) => {
       const params = query;
-      console.log("@@@@",query)
       return instance.post(url, params);
     },
     delete: ({ url, query }: { url: string; query: any }) => {

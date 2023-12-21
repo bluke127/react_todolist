@@ -23,7 +23,6 @@ app.use(
 );
 const port = 8080;
 sequelize.sync().then((client) => {
-    // console.log(client,"client")
 });
 app.use(TodoRoute);
 app.use(RoutineRoute);

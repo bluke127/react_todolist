@@ -15,7 +15,6 @@ import {
 } from "../Models/Todo.js";
 
 export async function cudTodo(req, res) {
-  // console.log(req.body,req.query,req.data,"req")
   const data = req.body.data;
   try {
     let arr = []; //잔존할 데이터
@@ -35,12 +34,10 @@ export async function cudTodo(req, res) {
         await deleteContent({ contentId: data.id });
       }
     }
-    console.log(data, "data");
 
     if (typeof data !== "string") {
       let index = 0;
       for (let { contentId, checked, content, date, routineId } of data) {
-        // let findRoutineTodo = await getRoutineContent(routineId)
         let findtodo = await getContent({ contentId })
         //routine으로 생성된 계획이 아니고, 새로 추가된 계획이라면 추가
         if (!(findtodo)) {
@@ -73,8 +70,6 @@ export async function cudTodo(req, res) {
       }
     }
 
-    // console.log((await isExistContent({ date: forgDate }), "????"));
-    // console.log(await isExistTodo(forgDate), "!!!!");
     if (!(await isExistContent({ date: forgDate }))) {
       await deleteTodoData({ date: forgDate });
       return res.status(200).json({ message: `${forgDate} 할일 저장 삭제` });
@@ -94,7 +89,6 @@ export const getTodo = async (req, res) => {
   const { date } = req.query;
 
   try {
-    console.log(date, "date");
     let response = await getContentData(date);
     response = response
       ? {

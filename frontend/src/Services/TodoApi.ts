@@ -20,7 +20,6 @@ export function useTodoApi() {
     //모두 삭제되면 날짜만 넘겨줌
     postTodoApi(query: { data: PostTodoType[] | string }) {
       let _url = url;
-      console.log(query, "@@@@");
       return api.post({
         url: _url,
         query: query,

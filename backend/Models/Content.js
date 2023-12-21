@@ -47,7 +47,6 @@ export async function createContent({ checked, content, contentDate, sort,routin
 }
 
 export async function updateContent({ contentId, checked, content, sort }) {
-  console.log("update");
   const contentData = await Content.findByPk(contentId);
   if (contentData) {
     contentData.completed = checked;
@@ -64,7 +63,6 @@ export async function deleteContent({ contentId }) {
   }
 }
 export async function findAllDateContent(date) {
-  console.log(date, "sssssttt");
   const contentData = await Content.findAll({ where: { contentDate: date } });
   return contentData.map((v) => v.dataValues);
 }
@@ -73,11 +71,5 @@ export async function getContent({ contentId }) {
   return Content.findByPk(contentId);
 }
 export async function isExistContent({ date }) {
-  console.log(
-    Content.count({ where: { contentDate: date } }),
-    !!(await Content.count({ where: { contentDate: date } })),
-    date,
-    "ddddd"
-  );
   return await Content.count({ where: { contentDate: date } });
 }

@@ -32,7 +32,6 @@ export const Routine = sequelize.define(
 );
 
 export async function createRoutineData({ day, content, contentDate }) {
-  console.log("creaate");
   return Routine.create({ day });
 }
 export async function updateRoutineData({ day, contentId, checked, content }) {
@@ -46,27 +45,6 @@ export async function deleteRoutineData({ day }) {
   });
 }
 export async function getRoutineContentData(day) {
-  console.log(
-    day == "월",
-    await RoutineContent.findAll({
-      where: { contentDay: "월" },
-      logging: console.log,
-    }),
-    "@@@@day"
-  );
-
-  console.log(
-    day,
-    await RoutineContent.findAll({
-      where: { contentDay: day },
-      logging: console.log,
-    }),
-    "@@@@!!!!!day"
-  );
-  console.log(
-    await Content.findAll({ where: { contentDate: "20150101" } }),
-    "!!!!!!!!!!!day"
-  );
 
   return RoutineContent.findAll({ where: { contentDay: day } });
 }

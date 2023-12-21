@@ -15,7 +15,6 @@ export const UtilsReducer = (
   state = INITAIL_STATE,
   action: { type: string; payload: any }
 ) => {
-  console.log(action, "action");
   switch (action.type) {
     case `UTILS/FocusTarget`:
       return { ...state, FOCUS_TARGET: action.payload };

@@ -39,16 +39,12 @@ export const AxiosUtilsReducer = (
   state = INITIALSTATE,
   action: { type: string; result: any }
 ) => {
-  console.log(action, "aaaaaaaa");
   switch (`axios/${action.type}`) {
     case `axios/Success`:
-      console.log(action, "bbbbb");
       return { ...state, ...SuccessApi.result };
     case `axios/Error`:
-      console.log(action, "bbbbb");
       return { ...state, ...ErrorApi.result };
     case `axios/Loading`:
-      console.log(action, "bbbbb");
       return { ...state, ...LoadingApi.result };
     default:
       return state;
