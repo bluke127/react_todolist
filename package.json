@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
-    "start-backend": "cd backend && node app.js",
+    "start-backend": "cd backend && nodemon app.js",
     "start-frontend": "cd frontend && npm start",
     "build": "concurrently \"npm run build-backend\" \"npm run build-frontend\"",
     "build-backend": "cd backend && npm run build",
@@ -16,6 +16,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/lodash": "^4.14.202",
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "redux-devtools-extension": "^2.13.9",
+    "usehooks-ts": "^2.9.1"
   }
 }
