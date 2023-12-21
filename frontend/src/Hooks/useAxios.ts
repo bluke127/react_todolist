@@ -17,7 +17,7 @@ const useAxiosHook = () => {
       "GET, POST, PUT, DELETE, OPTIONS";
 
     axios.defaults.headers.common["Content-Type"] =
-      "application/x-www-form-urlencoded";
+      "application/json";
     let token = localStorage.getItem("token")
       ? localStorage.getItem("token")
       : sessionStorage.getItem("token");
@@ -66,6 +66,7 @@ const useAxiosHook = () => {
     },
     post: ({ url, query }: { url: string; query: any }) => {
       const params = query;
+      console.log("@@@@",query)
       return instance.post(url, params);
     },
     delete: ({ url, query }: { url: string; query: any }) => {
