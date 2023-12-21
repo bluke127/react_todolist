@@ -51,6 +51,7 @@ const CheckBox = forwardRef(
           className={"hidden"}
           name={name || id}
           checked={checked}
+          disabled={readonly}
         />
       </span>
     );
