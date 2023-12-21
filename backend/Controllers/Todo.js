@@ -15,21 +15,27 @@ import {
 } from "../Models/Todo.js";
 
 export async function cudTodo(req, res) {
+  // console.log(req.body,req.query,req.data,"req")
   const data = req.body.data;
   try {
     let arr = []; //잔존할 데이터
     let forgDate;
+    debugger
+    console.log(data,"data")
     for (let { contentId, date } of data) {
       forgDate = date;
       arr.push(contentId);
     }
+    console.log(arr,"arr")
     let allData = await findAllDateContent(forgDate);
+    console.log(allData,"allData")
     //잔존하지 않을 데이터는 삭제
     for (let data of allData) {
       if (!arr.includes(data.contentId)) {
         await deleteContent({ contentId: data.contentId });
       }
     }
+    console.log(data,"data")
     for (let { contentId, checked, content, date } of data) {
       console.log(allData, "alldata", data);
       if (!(await getContent(contentId))) {
@@ -74,7 +80,7 @@ export const getTodo = async (req, res) => {
           }),
         }
       : [];
-    return res.status(200).json(response);
+    return res.status(200).json({ data: response });
   } catch (error) {
     console.error("Error creating user:", error);
     res

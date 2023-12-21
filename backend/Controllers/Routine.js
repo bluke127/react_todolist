@@ -60,7 +60,7 @@ export const getRoutine = async (req, res) => {
 
   try {
     let response = await getRoutineContentData(day);
-    console.log(day,response, "day");
+    console.log(day, response, "day");
     response = response
       ? {
           day,
@@ -73,7 +73,7 @@ export const getRoutine = async (req, res) => {
           }),
         }
       : [];
-    return res.status(200).json(response);
+    return res.status(200).json({ data: response });
   } catch (error) {
     console.error("Error creating user:", error);
     res
