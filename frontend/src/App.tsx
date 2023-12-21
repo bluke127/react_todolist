@@ -55,7 +55,6 @@ function App() {
         onFocus={setTarget as FocusEventHandler}
         onClick={setTarget as MouseEventHandler}
       >
-        {JSON.stringify(axiosResult) + "SSSSSSS"}
         <Layout />
         <PopupPortal>
           <Popup />
