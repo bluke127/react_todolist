@@ -47,7 +47,7 @@ function Routine({
       setPlanList((arr) => [...arr]);
       // localStorage.setItem(day, JSON.stringify(planList));
       await postRoutineApi({
-        data: planList.map((todo) => {
+        data: !planList.length?day:planList.map((todo) => {
           return {
             contentId: todo.contentId,
             content: todo.content,

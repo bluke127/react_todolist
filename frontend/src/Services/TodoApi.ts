@@ -17,12 +17,13 @@ export function useTodoApi() {
         query: { date },
       });
     },
-    postTodoApi(query: { data: postTodoType[] }) {
+    //모두 삭제되면 날짜만 넘겨줌
+    postTodoApi(query: { data: postTodoType[] | string }) {
       let _url = url;
-      console.log(query,"@@@@")
+      console.log(query, "@@@@");
       return api.post({
         url: _url,
-        query:query,
+        query: query,
       });
     },
   };

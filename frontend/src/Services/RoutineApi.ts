@@ -17,7 +17,8 @@ export function useRoutineApi() {
         query: { day },
       });
     },
-    postRoutineApi(query: { data: postRoutineType[] }) {
+    //모두 삭제되면 요일만 넘겨줌
+    postRoutineApi(query: { data: postRoutineType[] | string }) {
       let _url = url;
       return api.post({
         url: _url,

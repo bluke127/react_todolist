@@ -74,14 +74,17 @@ export function Todo() {
     try {
       // localStorage.setItem(selectedDate, JSON.stringify(planList));
       await postTodoApi({
-        data: planList.map((todo) => {
-          return {
-            contentId: todo.contentId,
-            content: todo.content,
-            checked: todo.checked,
-            date: selectedDate,
-          };
-        }),
+        data: !planList.length
+          ? selectedDate
+          : planList.map((todo) => {
+              return {
+                contentId: todo.contentId,
+                content: todo.content,
+                checked: todo.checked,
+                date: selectedDate,
+                routineId: todo.rountineId ?? null,
+              };
+            }),
       });
       setPopup("저장되었습니다");
     } catch (e: any) {

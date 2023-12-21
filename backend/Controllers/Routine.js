@@ -18,9 +18,13 @@ export async function cudRoutine(req, res) {
   try {
     let arr = []; //잔존할 데이터
     let forgDay;
-    for (let { contentId, day } of data) {
-      forgDay = day;
-      arr.push(contentId);
+    if (typeof data !== "string") {
+      for (let { contentId, day } of data) {
+        forgDay = day;
+        arr.push(contentId);
+      }
+    } else {
+      forgDay = data;
     }
     let allData = await findAllDateRoutineContent(forgDay);
     //잔존하지 않을 데이터는 삭제
@@ -29,27 +33,28 @@ export async function cudRoutine(req, res) {
         await deleteRoutineContent({ contentId: data.id });
       }
     }
-    let index = 0;
-    for (let { contentId, checked, content, day } of data) {
-      console.log(allData, "alldata", data);
-      if (!(await getRoutineContent({ contentId }))) {
-        await createRoutineContent({
-          checked,
-          content,
-          contentDay: day,
-          sort: index,
-        });
-      } else {
-        await updateRoutineContent({
-          contentId,
-          checked,
-          content,
-          sort: index,
-        });
+    if (typeof data !== "string") {
+      let index = 0;
+      for (let { contentId, checked, content, day } of data) {
+        console.log(allData, "alldata", data);
+        if (!(await getRoutineContent({ contentId }))) {
+          await createRoutineContent({
+            checked,
+            content,
+            contentDay: day,
+            sort: index,
+          });
+        } else {
+          await updateRoutineContent({
+            contentId,
+            checked,
+            content,
+            sort: index,
+          });
+        }
+        index++;
       }
-      index++;
     }
-
     console.log((await isExistRoutineContent({ day: forgDay }), "????"));
     console.log(await isExistRoutine(forgDay), "!!!!");
     if (!(await isExistRoutineContent({ day: forgDay }))) {

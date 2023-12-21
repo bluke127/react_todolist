@@ -20,9 +20,13 @@ export async function cudTodo(req, res) {
   try {
     let arr = []; //잔존할 데이터
     let forgDate;
-    for (let { contentId, date } of data) {
-      forgDate = date;
-      arr.push(contentId);
+    if (typeof data !== "string") {
+      for (let { contentId, date } of data) {
+        forgDate = date;
+        arr.push(contentId);
+      }
+    } else {
+      forgDate = data;
     }
     let allData = await findAllDateContent(forgDate);
     //잔존하지 않을 데이터는 삭제
@@ -32,20 +36,28 @@ export async function cudTodo(req, res) {
       }
     }
     console.log(data, "data");
-    let index = 0;
-    for (let { contentId, checked, content, date } of data) {
-      // console.log(allData, "alldata", data);
-      if (!(await getContent({ contentId }))) {
-        await createContent({
-          checked,
-          content,
-          contentDate: date,
-          sort: index,
-        });
-      } else {
-        await updateContent({ contentId, checked, content, sort: index });
+
+    if (typeof data !== "string") {
+      let index = 0;
+      for (let { contentId, checked, content, date, routineId } of data) {
+        if (!(await getContent({ contentId }))) {
+          await createContent({
+            checked,
+            content,
+            contentDate: date,
+            sort: index,
+          });
+        } else {
+          await updateContent({
+            contentId,
+            checked,
+            content,
+            sort: index,
+            routineId: routineId ?? null,
+          });
+        }
+        index++;
       }
-      index++;
     }
 
     // console.log((await isExistContent({ date: forgDate }), "????"));
