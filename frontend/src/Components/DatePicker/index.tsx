@@ -11,11 +11,12 @@ import { DATE_FORMAT, U_DATE_FORMAT } from "@/Constant/index";
 import Button from "../Button";
 import { DateType } from "@/Types/index";
 type PropType = DateType;
-const DatePicker = ((props: PropType, ref: ForwardedRef<HTMLElement>) => {
+const DatePicker = (props: PropType, ref: ForwardedRef<HTMLElement>) => {
   let {
     onChange,
     minDate,
     maxDate,
+    onSelect,
     selectedDate,
     setSelectedDate,
     dateFormat = DATE_FORMAT as string,
@@ -46,6 +47,7 @@ const DatePicker = ((props: PropType, ref: ForwardedRef<HTMLElement>) => {
 
   const handleOnChangeFunc = (d: Date, e: SyntheticEvent<any, Event>) => {
     //날짜 선택시에 함수 있으면 그거 사용
+    
     //아니면 그냥 날짜 변경
     onChange && !setSelectedDate
       ? onChange(d, e)
@@ -66,6 +68,7 @@ const DatePicker = ((props: PropType, ref: ForwardedRef<HTMLElement>) => {
         maxDate={maxDate} // maxDate 이후 날짜 선택 불가
         selected={new Date(selectedDate as string)}
         onChange={handleOnChangeFunc}
+        onSelect={onSelect}
         popperClassName={popperClassName + alwaysOpen ? "always_open" : ""}
         renderCustomHeader={({
           date,
@@ -102,5 +105,5 @@ const DatePicker = ((props: PropType, ref: ForwardedRef<HTMLElement>) => {
       />
     </div>
   );
-});
+};
 export default DatePicker;
