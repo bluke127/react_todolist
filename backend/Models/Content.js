@@ -48,7 +48,7 @@ export async function updateContent({ contentId, checked, content, sort }) {
   if (contentData) {
     contentData.completed = checked;
     contentData.content = content;
-    contentData.sort = sort
+    contentData.sort = sort;
     return contentData.save();
   }
 }

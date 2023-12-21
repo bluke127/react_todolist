@@ -96,9 +96,9 @@ export function Todo() {
       let _r = await getRoutineApi(selectedDay);
       let r = _r.data.content;
       if (r && r.length) {
-        setPlanList((arr) => [...r]);
+        setRoutinueList((arr) => [...r]);
       } else {
-        setPlanList((_) => []);
+        setRoutinueList((_) => []);
       }
       dispatch(ShowModal(id));
     } catch (e) {

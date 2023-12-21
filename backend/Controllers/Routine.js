@@ -25,17 +25,29 @@ export async function cudRoutine(req, res) {
     let allData = await findAllDateRoutineContent(forgDay);
     //잔존하지 않을 데이터는 삭제
     for (let data of allData) {
-      if (!arr.includes(data.contentId)) {
-        await deleteRoutineContent({ contentId: data.contentId });
+      if (!arr.includes(data.id)) {
+        await deleteRoutineContent({ contentId: data.id });
       }
     }
+    let index = 0;
     for (let { contentId, checked, content, day } of data) {
       console.log(allData, "alldata", data);
-      if (!(await getRoutineContent(contentId))) {
-        await createRoutineContent({ checked, content, contentDay: day });
+      if (!(await getRoutineContent({ contentId }))) {
+        await createRoutineContent({
+          checked,
+          content,
+          contentDay: day,
+          sort: index,
+        });
       } else {
-        await updateRoutineContent({ contentId, checked, content });
+        await updateRoutineContent({
+          contentId,
+          checked,
+          content,
+          sort: index,
+        });
       }
+      index++;
     }
 
     console.log((await isExistRoutineContent({ day: forgDay }), "????"));
@@ -64,13 +76,15 @@ export const getRoutine = async (req, res) => {
     response = response
       ? {
           day,
-          content: response.map((todo) => {
-            return {
-              content: todo.content,
-              contentId: todo.id,
-              checked: todo.completed,
-            };
-          }),
+          content: response
+            .sort((a, b) => a.sort - b.sort)
+            .map((todo) => {
+              return {
+                content: todo.content,
+                contentId: todo.id,
+                checked: todo.completed,
+              };
+            }),
         }
       : [];
     return res.status(200).json({ data: response });

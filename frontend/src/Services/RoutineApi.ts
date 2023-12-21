@@ -6,9 +6,7 @@ type getRoutineType = { day: string; content: DragNDropItemType[] };
 type postRoutineType = Pick<
   DragNDropItemType,
   "contentId" | "content" | "checked"
-> & {
-  day: string;
-};
+> & { day: string };
 export function useRoutineApi() {
   let api = useAxiosHook();
   return {
@@ -19,9 +17,9 @@ export function useRoutineApi() {
         query: { day },
       });
     },
-    postRoutineApi(query: postRoutineType[]) {
+    postRoutineApi(query: { data: postRoutineType[] }) {
       let _url = url;
-      return api.get({
+      return api.post({
         url: _url,
         query,
       });

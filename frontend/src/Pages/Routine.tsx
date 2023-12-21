@@ -11,6 +11,7 @@ import Input from "@/Components/Input";
 import Button from "@/Components/Button";
 import useReducer from "@/Hooks/useReducer";
 import { DragNDropItemType } from "../Types";
+import { useRoutineApi } from "@/Services/RoutineApi";
 function Routine({
   day,
   planList,
@@ -23,6 +24,7 @@ function Routine({
   closeModal: Function;
 }) {
   const [insertValue, setInsertValue] = useState("");
+  const { getRoutineApi, postRoutineApi } = useRoutineApi();
   const { setPopup, closePopup } = useReducer();
   const [routineDay, setRoutineDay] = useState(day);
   const onAddTodoList = useCallback(() => {
@@ -40,26 +42,49 @@ function Routine({
     setInsertValue("");
   }, [planList, insertValue]);
 
-  const onSaveTodoList = useCallback(() => {
-    setPlanList((arr) => [...arr]);
-    localStorage.setItem(day, JSON.stringify(planList));
-    setPopup("저장되었습니다", {
-      Confirm: () => {
-        closeModal();
-      },
-    });
+  const onSaveTodoList = useCallback(async () => {
+    try {
+      setPlanList((arr) => [...arr]);
+      // localStorage.setItem(day, JSON.stringify(planList));
+      await postRoutineApi({
+        data: planList.map((todo) => {
+          return {
+            contentId: todo.contentId,
+            content: todo.content,
+            checked: todo.checked,
+            day: day,
+          };
+        }),
+      });
+      setPopup("저장되었습니다", {
+        Confirm: () => {
+          closeModal();
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }, [planList, insertValue]);
-  const onClickDay = useCallback((day: string) => {
-    setRoutineDay(day);
-    let r = JSON.parse(localStorage.getItem(day) as string);
-    if (r && r.length) {
-      setPlanList(() => [...r]);
-    } else {
-      setPlanList(() => []);
+  const onSelect = useCallback(async (day: string) => {
+    try {
+      setRoutineDay(day);
+      // let r = JSON.parse(localStorage.getItem(day) as string);
+      let _r = await getRoutineApi(day);
+      let r = _r.data.content;
+      r = r.map((item) => {
+        return { ...item, checked: false };
+      });
+      if (r && r.length) {
+        setPlanList(() => [...r]);
+      } else {
+        setPlanList(() => []);
+      }
+    } catch (e) {
+      console.log(e);
     }
   }, []);
   useEffect(() => {
-    onClickDay(routineDay);
+    onSelect(routineDay);
   }, [routineDay]);
   return (
     <div className="w-4/5 h-4/5 flex flex-col">
@@ -82,7 +107,7 @@ function Routine({
                   : "bg-gray-400"
               }`
             }
-            onClick={() => onClickDay(dayItem)}
+            onClick={() => onSelect(dayItem)}
           >
             <div className="w-full">{dayItem}</div>
           </div>

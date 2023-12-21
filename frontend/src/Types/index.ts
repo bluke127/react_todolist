@@ -32,7 +32,7 @@ export interface DateType {
   onChange?: (date: Date, event: SyntheticEvent<any, Event>) => void;
   selectedDate: string | null;
   setSelectedDate?: Function;
-
+  onSelect?: any;
   dateFormat?: string;
   minDate?: null | Date;
   maxDate?: null | Date;
