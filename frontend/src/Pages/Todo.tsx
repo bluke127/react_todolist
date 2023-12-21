@@ -1,7 +1,9 @@
+//각 날짜에 따라 todo를 지정할 수 있고
+//특이 사항으로 routine이라는 걸 설정할 수 있음
+//설정하면 요일별로 루틴이 오늘을 기준으로 미래의 요일에 동일하게 적용됨
 import {
   useEffect,
   useCallback,
-  useRef,
   useState,
   useMemo,
   useId,
@@ -10,7 +12,7 @@ import {
   SyntheticEvent,
 } from "react";
 import DatePicker from "@/Components/DatePicker";
-import { DAYS, U_DATE_FORMAT } from "../Constant";
+import { DAYS, U_DATE_FORMAT } from "@/Constant";
 import moment from "moment";
 import DragNDrop from "@/Components/DragNDrop";
 import Button from "@/Components/Button";
@@ -19,22 +21,18 @@ import Modal from "@/Components/Modal";
 import { AnyAction } from "redux";
 import { useDispatch } from "react-redux";
 import { ShowModal, CloseModal } from "@/Store/reducers/modal";
-import useReducer from "./../Hooks/useReducer";
-import { MdAutoFixOff, MdAutoFixNormal } from "react-icons/md";
+import useReducer from "@/Hooks/useReducer";
 import Routine from "@/Pages/Routine";
 import { DragNDropItemType, PlanType } from "@/Types/index";
 import { useTodoApi } from "@/Services/TodoApi";
 import { useRoutineApi } from "@/Services/RoutineApi";
-import { AxiosResponse } from "axios";
 
 export function Todo() {
   const id = useId(); //아이디
   const { setPopup } = useReducer(); //팝업 세팅
   const dispatch: Dispatch<AnyAction> = useDispatch();
-  const datePicker = useRef(); //달력
-  const datePickerWrappper = useRef(null);
-  const { getTodoApi, postTodoApi } = useTodoApi();
-  const { getRoutineApi, postRoutineApi } = useRoutineApi();
+  const { getTodoApi, postTodoApi } = useTodoApi();//todo 세팅
+  const { getRoutineApi, postRoutineApi } = useRoutineApi();//루틴 세팅
   const [isShowDatePicker, setIsShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
     moment().format(U_DATE_FORMAT)
@@ -52,7 +50,7 @@ export function Todo() {
   const [insertValue, setInsertValue]: [
     string,
     Dispatch<SetStateAction<string>>
-  ] = useState("");
+  ] = useState("");//추가 todo
   //추가
   const onAddTodoList = useCallback(() => {
     let saveData: PlanType[] = [...planList];
@@ -67,6 +65,7 @@ export function Todo() {
     setPlanList((arr: PlanType[]) => {
       return [...saveData];
     });
+    //할당해줄 id
     setCntId(cntForId + 1);
     setInsertValue("");
   }, [planList, insertValue]);
@@ -82,7 +81,7 @@ export function Todo() {
                 content: todo.content,
                 checked: todo.checked,
                 date: selectedDate,
-                routineId: todo.routineId,
+                routineId: todo.routineId, //루틴 id
               };
             }),
       });
@@ -95,9 +94,9 @@ export function Todo() {
   //요일별 루틴에서 모달띄우기
   const handleShowModal = useCallback(async () => {
     try {
-      // let r = JSON.parse(localStorage.getItem(selectedDate) as string);
       let _r = await getRoutineApi(selectedDay);
       let r = _r.data.content;
+      //루틴에 대한 data있으면?
       if (r && r.length) {
         setRoutinueList((arr) => [...r]);
       } else {
@@ -133,16 +132,16 @@ export function Todo() {
   }, []);
 
   const [cntForId, setCntId] = useState(0);
+  //루틴 세팅
   const setRoutine = useCallback(async () => {
     try {
-      // let dayRoutine = JSON.parse(localStorage.getItem(selectedDay) as string);
-      // let todo = JSON.parse(localStorage.getItem(selectedDate) as string);
       let _dayRoutine = await getRoutineApi(selectedDay);
       let _todo = await getTodoApi(selectedDate);
       let todo: PlanType[] = _todo.data.content;
       let dayRoutine: PlanType[] = _dayRoutine.data.content;
       let arr: PlanType[] = [];
       let today = moment(new Date()).format("YYYY-MM-DD");
+      //오늘이후로 적용
       if (
         new Date(today).getTime() <= new Date(selectedDate).getTime() &&
         dayRoutine

@@ -10,7 +10,7 @@ import { DAYS } from "@/Constant/index";
 import Input from "@/Components/Input";
 import Button from "@/Components/Button";
 import useReducer from "@/Hooks/useReducer";
-import { DragNDropItemType, PlanType } from "../Types";
+import { PlanType } from "../Types";
 import { useRoutineApi } from "@/Services/RoutineApi";
 function Routine({
   day,
@@ -23,10 +23,12 @@ function Routine({
   setPlanList: Dispatch<SetStateAction<PlanType[]>>;
   closeModal: Function;
 }) {
+  //추가할 todo
   const [insertValue, setInsertValue] = useState("");
   const { getRoutineApi, postRoutineApi } = useRoutineApi();
   const { setPopup, closePopup } = useReducer();
   const [routineDay, setRoutineDay] = useState(day);
+  // 추가
   const onAddTodoList = useCallback(() => {
     let saveData = [...planList];
     if (insertValue) {
@@ -41,7 +43,7 @@ function Routine({
     });
     setInsertValue("");
   }, [planList, insertValue]);
-
+  //저장
   const onSaveTodoList = useCallback(async () => {
     try {
       setPlanList((arr) => [...arr]);
@@ -68,7 +70,6 @@ function Routine({
   const onSelect = useCallback(async (day: string) => {
     try {
       setRoutineDay(day);
-      // let r = JSON.parse(localStorage.getItem(day) as string);
       let _r = await getRoutineApi(day);
       let r = _r.data.content;
       r = r.map((item) => {
