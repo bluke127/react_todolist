@@ -20,33 +20,36 @@ export async function cudTodo(req, res) {
   try {
     let arr = []; //잔존할 데이터
     let forgDate;
-    debugger
-    console.log(data,"data")
     for (let { contentId, date } of data) {
       forgDate = date;
       arr.push(contentId);
     }
-    console.log(arr,"arr")
     let allData = await findAllDateContent(forgDate);
-    console.log(allData,"allData")
     //잔존하지 않을 데이터는 삭제
     for (let data of allData) {
-      if (!arr.includes(data.contentId)) {
-        await deleteContent({ contentId: data.contentId });
+      if (!arr.includes(data.id)) {
+        await deleteContent({ contentId: data.id });
       }
     }
-    console.log(data,"data")
+    console.log(data, "data");
+    let index = 0;
     for (let { contentId, checked, content, date } of data) {
-      console.log(allData, "alldata", data);
-      if (!(await getContent(contentId))) {
-        await createContent({ checked, content, contentDate: date });
+      // console.log(allData, "alldata", data);
+      if (!(await getContent({ contentId }))) {
+        await createContent({
+          checked,
+          content,
+          contentDate: date,
+          sort: index,
+        });
       } else {
-        await updateContent({ contentId, checked, content });
+        await updateContent({ contentId, checked, content, sort: index });
       }
+      index++;
     }
 
-    console.log((await isExistContent({ date: forgDate }), "????"));
-    console.log(await isExistTodo(forgDate), "!!!!");
+    // console.log((await isExistContent({ date: forgDate }), "????"));
+    // console.log(await isExistTodo(forgDate), "!!!!");
     if (!(await isExistContent({ date: forgDate }))) {
       await deleteTodoData({ date: forgDate });
       return res.status(200).json({ message: `${forgDate} 할일 저장 삭제` });
@@ -71,13 +74,15 @@ export const getTodo = async (req, res) => {
     response = response
       ? {
           date,
-          content: response.map((todo) => {
-            return {
-              content: todo.content,
-              contentId: todo.id,
-              checked: todo.completed,
-            };
-          }),
+          content: response
+            .sort((a, b) => a.sort - b.sort)
+            .map((todo) => {
+              return {
+                content: todo.content,
+                contentId: todo.id,
+                checked: todo.completed,
+              };
+            }),
         }
       : [];
     return res.status(200).json({ data: response });

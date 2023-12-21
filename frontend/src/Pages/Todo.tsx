@@ -24,6 +24,7 @@ import { MdAutoFixOff, MdAutoFixNormal } from "react-icons/md";
 import Routine from "@/Pages/Routine";
 import { DragNDropItemType } from "@/Types/index";
 import { useTodoApi } from "@/Services/TodoApi";
+import { useRoutineApi } from "@/Services/RoutineApi";
 import { AxiosResponse } from "axios";
 
 export function Todo() {
@@ -33,6 +34,7 @@ export function Todo() {
   const datePicker = useRef(); //달력
   const datePickerWrappper = useRef(null);
   const { getTodoApi, postTodoApi } = useTodoApi();
+  const { getRoutineApi, postRoutineApi } = useRoutineApi();
   const [isShowDatePicker, setIsShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
     moment().format(U_DATE_FORMAT)
@@ -68,19 +70,40 @@ export function Todo() {
     setInsertValue("");
   }, [planList, insertValue]);
   //저장
-  const onSaveTodoList = useCallback(() => {
-    localStorage.setItem(selectedDate, JSON.stringify(planList));
-    setPopup("저장되었습니다");
+  const onSaveTodoList = useCallback(async () => {
+    try {
+      // localStorage.setItem(selectedDate, JSON.stringify(planList));
+      await postTodoApi({
+        data: planList.map((todo) => {
+          return {
+            contentId: todo.contentId,
+            content: todo.content,
+            checked: todo.checked,
+            date: selectedDate,
+          };
+        }),
+      });
+      setPopup("저장되었습니다");
+    } catch (e: any) {
+      // console.log(e);
+      setPopup(e.message);
+    }
   }, [planList, insertValue]);
   //요일별 루틴에서 모달띄우기
-  const handleShowModal = useCallback(() => {
-    let r = JSON.parse(localStorage.getItem(selectedDate) as string);
-    if (r && r.length) {
-      setPlanList((arr) => [...r]);
-    } else {
-      setPlanList((_) => []);
+  const handleShowModal = useCallback(async () => {
+    try {
+      // let r = JSON.parse(localStorage.getItem(selectedDate) as string);
+      let _r = await getRoutineApi(selectedDay);
+      let r = _r.data.content;
+      if (r && r.length) {
+        setPlanList((arr) => [...r]);
+      } else {
+        setPlanList((_) => []);
+      }
+      dispatch(ShowModal(id));
+    } catch (e) {
+      console.log(e);
     }
-    dispatch(ShowModal(id));
   }, [selectedDate]);
   //요일별 루틴 모달을 닫고 실행시킬함수
   const handleCloseModal = useCallback((d: Date) => {
@@ -92,6 +115,7 @@ export function Todo() {
   const changeDate = useCallback((d: Date, e?: SyntheticEvent<any, Event>) => {
     let _d = moment(d).format(U_DATE_FORMAT);
     setSelectedDate(_d);
+    setIsShowDatePicker(false);
   }, []);
   //요일
   const selectedDay = useMemo(
@@ -107,24 +131,30 @@ export function Todo() {
 
   const [cntForId, setCntId] = useState(0);
   const setRoutine = useCallback(async () => {
-    let dayRoutine = JSON.parse(localStorage.getItem(selectedDay) as string);
-    // let todo = JSON.parse(localStorage.getItem(selectedDate) as string);
-    let todo: any = await getTodoApi(selectedDate);
-    todo = todo.content;
-    let arr: DragNDropItemType[] = [];
-    let today = moment(new Date()).format("YYYY-MM-DD");
-    if (
-      new Date(today).getTime() <= new Date(selectedDate).getTime() &&
-      dayRoutine
-    ) {
-      setRoutinueList((arr) => [...dayRoutine]);
-      arr.push(...dayRoutine);
+    try {
+      // let dayRoutine = JSON.parse(localStorage.getItem(selectedDay) as string);
+      // let todo = JSON.parse(localStorage.getItem(selectedDate) as string);
+      let _dayRoutine = await getRoutineApi(selectedDay);
+      let _todo = await getTodoApi(selectedDate);
+      let todo = _todo.data.content;
+      let dayRoutine = _dayRoutine.data.content;
+      let arr: DragNDropItemType[] = [];
+      let today = moment(new Date()).format("YYYY-MM-DD");
+      if (
+        new Date(today).getTime() <= new Date(selectedDate).getTime() &&
+        dayRoutine
+      ) {
+        setRoutinueList((arr) => [...dayRoutine]);
+        arr.push(...dayRoutine);
+      }
+      if (todo) {
+        arr.push(...todo);
+      }
+      setPlanList((_) => [...arr]);
+      setIsShowDatePicker(false);
+    } catch (e) {
+      console.log(e);
     }
-    if (todo) {
-      arr.push(...todo);
-    }
-    setPlanList((_) => [...arr]);
-    setIsShowDatePicker(false);
   }, [selectedDay, selectedDate]);
   return (
     <div className="red w-full h-full flex-col flex">
@@ -173,6 +203,7 @@ export function Todo() {
                 alwaysOpen={isShowDatePicker}
                 customInput={<div></div>}
                 onChange={changeDate}
+                onSelect ={changeDate}
               ></DatePicker>
             </div>
           ) : (
