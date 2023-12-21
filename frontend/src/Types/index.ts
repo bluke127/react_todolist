@@ -58,6 +58,8 @@ export interface DragNDropItemType extends DragNDropAttrType {
   checked: boolean;
   content: string | number;
 }
+
+export type PlanType = DragNDropItemType & { routineId?: number };
 //object의 key가 확실하지 않은 타입
 export interface UnknownObj<T = any> {
   [key: string]: T;

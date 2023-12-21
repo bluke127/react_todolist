@@ -22,7 +22,7 @@ import { ShowModal, CloseModal } from "@/Store/reducers/modal";
 import useReducer from "./../Hooks/useReducer";
 import { MdAutoFixOff, MdAutoFixNormal } from "react-icons/md";
 import Routine from "@/Pages/Routine";
-import { DragNDropItemType } from "@/Types/index";
+import { DragNDropItemType, PlanType } from "@/Types/index";
 import { useTodoApi } from "@/Services/TodoApi";
 import { useRoutineApi } from "@/Services/RoutineApi";
 import { AxiosResponse } from "axios";
@@ -39,14 +39,15 @@ export function Todo() {
   const [selectedDate, setSelectedDate] = useState<string>(
     moment().format(U_DATE_FORMAT)
   ); //날짜
+
   const [planList, setPlanList]: [
-    DragNDropItemType[],
-    Dispatch<SetStateAction<DragNDropItemType[]>>
-  ] = useState<DragNDropItemType[]>([]);
+    PlanType[],
+    Dispatch<SetStateAction<PlanType[]>>
+  ] = useState<PlanType[]>([]);
   const [routinueList, setRoutinueList]: [
-    DragNDropItemType[],
-    Dispatch<SetStateAction<DragNDropItemType[]>>
-  ] = useState<DragNDropItemType[]>([]);
+    PlanType[],
+    Dispatch<SetStateAction<PlanType[]>>
+  ] = useState<PlanType[]>([]);
 
   const [insertValue, setInsertValue]: [
     string,
@@ -54,7 +55,7 @@ export function Todo() {
   ] = useState("");
   //추가
   const onAddTodoList = useCallback(() => {
-    let saveData: DragNDropItemType[] = [...planList];
+    let saveData: PlanType[] = [...planList];
     let insertData: DragNDropItemType = {
       content: insertValue,
       contentId: cntForId,
@@ -63,7 +64,7 @@ export function Todo() {
     if (insertValue) {
       saveData.push(insertData);
     }
-    setPlanList(() => {
+    setPlanList((arr: PlanType[]) => {
       return [...saveData];
     });
     setCntId(cntForId + 1);
@@ -72,6 +73,7 @@ export function Todo() {
   //저장
   const onSaveTodoList = useCallback(async () => {
     try {
+      debugger;
       // localStorage.setItem(selectedDate, JSON.stringify(planList));
       await postTodoApi({
         data: !planList.length
@@ -82,7 +84,7 @@ export function Todo() {
                 content: todo.content,
                 checked: todo.checked,
                 date: selectedDate,
-                routineId: todo.rountineId ?? null,
+                routineId: todo.routineId,
               };
             }),
       });
@@ -139,19 +141,33 @@ export function Todo() {
       // let todo = JSON.parse(localStorage.getItem(selectedDate) as string);
       let _dayRoutine = await getRoutineApi(selectedDay);
       let _todo = await getTodoApi(selectedDate);
-      let todo = _todo.data.content;
-      let dayRoutine = _dayRoutine.data.content;
-      let arr: DragNDropItemType[] = [];
+      let todo: PlanType[] = _todo.data.content;
+      let dayRoutine: PlanType[] = _dayRoutine.data.content;
+      let arr: PlanType[] = [];
       let today = moment(new Date()).format("YYYY-MM-DD");
       if (
         new Date(today).getTime() <= new Date(selectedDate).getTime() &&
         dayRoutine
       ) {
+        //content에서 rotine의 id가 포함된거는 중복임으로 다시 보여주지 않는 필터 작업
+        let todoRoutineId = todo.map((v) => v.routineId);
+        debugger
+        dayRoutine = dayRoutine
+          .map((v) => {
+            if (!todoRoutineId.includes(v.contentId as number)) {
+              return v;
+            }
+          })
+          .filter((v) => v) as PlanType[];
         setRoutinueList((arr) => [...dayRoutine]);
-        arr.push(...dayRoutine);
+        arr.push(
+          ...(dayRoutine.map((obj) => {
+            return { ...obj, routineId: obj.contentId };
+          }) as PlanType[])
+        );
       }
       if (todo) {
-        arr.push(...todo);
+        arr.push(...(todo as PlanType[]));
       }
       setPlanList((_) => [...arr]);
       setIsShowDatePicker(false);
@@ -206,7 +222,7 @@ export function Todo() {
                 alwaysOpen={isShowDatePicker}
                 customInput={<div></div>}
                 onChange={changeDate}
-                onSelect ={changeDate}
+                onSelect={changeDate}
               ></DatePicker>
             </div>
           ) : (

@@ -40,20 +40,33 @@ export async function cudTodo(req, res) {
     if (typeof data !== "string") {
       let index = 0;
       for (let { contentId, checked, content, date, routineId } of data) {
-        if (!(await getContent({ contentId }))) {
+        // let findRoutineTodo = await getRoutineContent(routineId)
+        let findtodo = await getContent({ contentId })
+        //routine으로 생성된 계획이 아니고, 새로 추가된 계획이라면 추가
+        if (!(findtodo)) {
           await createContent({
             checked,
             content,
             contentDate: date,
             sort: index,
+            routineId: routineId,
           });
-        } else {
+        //   //routine으로 생성된 계획이고 contentid는 없는 상황
+        // } else if((findRoutineTodo) && !(findtodo)){
+        //   await createContent({
+        //     checked,
+        //     content,
+        //     contentDate: date,
+        //     sort: index,
+        //     routineId: routineId,
+        //   });
+        }else {
           await updateContent({
             contentId,
             checked,
             content,
             sort: index,
-            routineId: routineId ?? null,
+            routineId: routineId,
           });
         }
         index++;
@@ -93,6 +106,7 @@ export const getTodo = async (req, res) => {
                 content: todo.content,
                 contentId: todo.id,
                 checked: todo.completed,
+                routineId: todo.routineId,
               };
             }),
         }

@@ -10,7 +10,7 @@ import { DAYS } from "@/Constant/index";
 import Input from "@/Components/Input";
 import Button from "@/Components/Button";
 import useReducer from "@/Hooks/useReducer";
-import { DragNDropItemType } from "../Types";
+import { DragNDropItemType, PlanType } from "../Types";
 import { useRoutineApi } from "@/Services/RoutineApi";
 function Routine({
   day,
@@ -19,8 +19,8 @@ function Routine({
   closeModal,
 }: {
   day: string;
-  planList: DragNDropItemType[];
-  setPlanList: Dispatch<SetStateAction<DragNDropItemType[]>>;
+  planList: PlanType[];
+  setPlanList: Dispatch<SetStateAction<PlanType[]>>;
   closeModal: Function;
 }) {
   const [insertValue, setInsertValue] = useState("");

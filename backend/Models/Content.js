@@ -29,16 +29,20 @@ export const Content = sequelize.define("Content", {
     // unique:true,
     defaultValue: 0, // 적절한 기본값 설정
   },
+  routineId:{
+    type: DataTypes.INTEGER,
+  }
 });
 
 Content.belongsTo(Todo, { as: "requestFriend" });
 
-export async function createContent({ checked, content, contentDate, sort }) {
+export async function createContent({ checked, content, contentDate, sort,routineId }) {
   return Content.create({
     completed: checked,
     content,
     contentDate,
     sort,
+    routineId
   });
 }
 
@@ -60,7 +64,7 @@ export async function deleteContent({ contentId }) {
   }
 }
 export async function findAllDateContent(date) {
-  console.log(date, "sssss");
+  console.log(date, "sssssttt");
   const contentData = await Content.findAll({ where: { contentDate: date } });
   return contentData.map((v) => v.dataValues);
 }
