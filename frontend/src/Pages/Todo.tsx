@@ -73,8 +73,6 @@ export function Todo() {
   //저장
   const onSaveTodoList = useCallback(async () => {
     try {
-      debugger;
-      // localStorage.setItem(selectedDate, JSON.stringify(planList));
       await postTodoApi({
         data: !planList.length
           ? selectedDate
@@ -151,7 +149,6 @@ export function Todo() {
       ) {
         //content에서 rotine의 id가 포함된거는 중복임으로 다시 보여주지 않는 필터 작업
         let todoRoutineId = todo.map((v) => v.routineId);
-        debugger
         dayRoutine = dayRoutine
           .map((v) => {
             if (!todoRoutineId.includes(v.contentId as number)) {

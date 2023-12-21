@@ -2,15 +2,15 @@ import useAxiosHook from "@/Hooks/useAxios";
 import { DragNDropItemType } from "../Types";
 import { AxiosResponse } from "axios";
 const url = `/todo`;
-type getTodoType = { date: string; content: DragNDropItemType[] };
-type postTodoType = Pick<
+type GetTodoType = { date: string; content: DragNDropItemType[] };
+type PostTodoType = Pick<
   DragNDropItemType,
   "contentId" | "content" | "checked"
 > & { date: string };
 export function useTodoApi() {
   let api = useAxiosHook();
   return {
-    getTodoApi(date: string): Promise<AxiosResponse<getTodoType>> {
+    getTodoApi(date: string): Promise<AxiosResponse<GetTodoType>> {
       let _url = url;
       return api.get({
         url: _url,
@@ -18,7 +18,7 @@ export function useTodoApi() {
       });
     },
     //모두 삭제되면 날짜만 넘겨줌
-    postTodoApi(query: { data: postTodoType[] | string }) {
+    postTodoApi(query: { data: PostTodoType[] | string }) {
       let _url = url;
       console.log(query, "@@@@");
       return api.post({

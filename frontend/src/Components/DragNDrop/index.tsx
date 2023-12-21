@@ -13,7 +13,7 @@ function DragNDrop({
   contentReadonly = false,
   emptyMessage = "할일을 추가해주세요",
 }: DragNDropType) {
-  type itemKeyType = keyof Pick<
+  type ItemKeyType = keyof Pick<
     DragNDropItemType,
     "contentId" | "content" | "checked"
   >;
@@ -42,14 +42,14 @@ function DragNDrop({
     console.log("드랍");
   };
   const setContent = useCallback(
-    (v: string | boolean, itemKey: itemKeyType | "delete", idx: number) => {
+    (v: string | boolean, itemKey: ItemKeyType | "delete", idx: number) => {
       if (itemKey !== "delete") {
-        setContentList((arr: itemKeyType[]) => {
+        setContentList((arr: ItemKeyType[]) => {
           (arr[idx] as any)[itemKey] = v;
           return [...arr];
         });
       } else {
-        setContentList((arr: itemKeyType[]) => {
+        setContentList((arr: ItemKeyType[]) => {
           arr.splice(idx, 1);
           return [...arr];
         });
@@ -77,7 +77,7 @@ function DragNDrop({
                 item={item}
                 setItem={(
                   v: string | boolean,
-                  changeKey: itemKeyType & "delete"
+                  changeKey: ItemKeyType & "delete"
                 ) => setContent(v, changeKey, index)}
                 cotentClassName={
                   cotentClassName + " focus:bg-white bg-transparent "
