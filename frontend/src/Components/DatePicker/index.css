@@ -1,7 +1,5 @@
 
-//customInput없을때
 .react-datepicker__input-container{
-  /* display:none !important; */
   height:0px !important;
   overflow:hidden;
 }
