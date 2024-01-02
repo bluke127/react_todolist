@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.bf4902a5.css",
-    "main.js": "/static/js/main.02817a19.js",
-    "static/media/Dovemayo_gothic.ttf": "/static/media/Dovemayo_gothic.3ccc1121c80e3edb0b5b.ttf",
-    "index.html": "/index.html",
-    "main.bf4902a5.css.map": "/static/css/main.bf4902a5.css.map",
-    "main.02817a19.js.map": "/static/js/main.02817a19.js.map"
+    "main.css": "/frontend/static/css/main.4e53ef8c.css",
+    "main.js": "/frontend/static/js/main.11ad82c8.js",
+    "static/media/Dovemayo_gothic.ttf": "/frontend/static/media/Dovemayo_gothic.3ccc1121c80e3edb0b5b.ttf",
+    "index.html": "/frontend/index.html",
+    "main.4e53ef8c.css.map": "/frontend/static/css/main.4e53ef8c.css.map",
+    "main.11ad82c8.js.map": "/frontend/static/js/main.11ad82c8.js.map"
   },
   "entrypoints": [
-    "static/css/main.bf4902a5.css",
-    "static/js/main.02817a19.js"
+    "static/css/main.4e53ef8c.css",
+    "static/js/main.11ad82c8.js"
   ]
 }
