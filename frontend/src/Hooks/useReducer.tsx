@@ -3,6 +3,7 @@ import { ClosePopup, ShowPopup } from "@/Store/reducers/popup";
 import { useDispatch } from "react-redux";
 function useReducer() {
   const dispatch = useDispatch();
+  //팝업 세팅
   function setPopup(
     content: string,
     popupType: { [key in Popup]?: any } = {
@@ -18,7 +19,7 @@ function useReducer() {
         return {
           word: "확인",
           func: async () => {
-            dispatch(ClosePopup());
+            dispatch(ClosePopup());// 팝업닫기
             await btnFunc();
           },
         };
@@ -56,6 +57,7 @@ function useReducer() {
       })
     );
   }
+  //팝업 닫기
   function closePopup() {
     dispatch(ClosePopup());
   }

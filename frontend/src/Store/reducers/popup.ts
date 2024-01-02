@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
 import { PopupType } from "@/Types/index";
-import { Popup } from "@/Enum/Popup";
-import { useDispatch } from "react-redux";
 const INITIAL_POPUP_INFO = {
   type: "알림",
   visible: false,
