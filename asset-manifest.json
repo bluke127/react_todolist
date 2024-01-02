@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/frontend/build/static/css/main.efd70eee.css",
-    "main.js": "/frontend/build/static/js/main.225b65b7.js",
-    "static/media/Dovemayo_gothic.ttf": "/frontend/build/static/media/Dovemayo_gothic.3ccc1121c80e3edb0b5b.ttf",
-    "index.html": "/frontend/build/index.html",
-    "main.efd70eee.css.map": "/frontend/build/static/css/main.efd70eee.css.map",
-    "main.225b65b7.js.map": "/frontend/build/static/js/main.225b65b7.js.map"
+    "main.css": "/react_todolist/frontend/build/static/css/main.4a991c15.css",
+    "main.js": "/react_todolist/frontend/build/static/js/main.840c6c2f.js",
+    "static/media/Dovemayo_gothic.ttf": "/react_todolist/frontend/build/static/media/Dovemayo_gothic.3ccc1121c80e3edb0b5b.ttf",
+    "index.html": "/react_todolist/frontend/build/index.html",
+    "main.4a991c15.css.map": "/react_todolist/frontend/build/static/css/main.4a991c15.css.map",
+    "main.840c6c2f.js.map": "/react_todolist/frontend/build/static/js/main.840c6c2f.js.map"
   },
   "entrypoints": [
-    "static/css/main.efd70eee.css",
-    "static/js/main.225b65b7.js"
+    "static/css/main.4a991c15.css",
+    "static/js/main.840c6c2f.js"
   ]
 }
