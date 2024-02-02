@@ -31,7 +31,7 @@ export async function updateTodoData({ date, contentId, checked, content }) {
 }
 export async function deleteTodoData({ date }) {
   Todo.findOne({ where: { date } }).then((todo) => {
-    return todo.destroy()
+    return todo?.destroy()
   });
 }
 export async function getContentData(date ) {

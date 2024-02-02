@@ -41,7 +41,7 @@ export async function updateRoutineData({ day, contentId, checked, content }) {
 }
 export async function deleteRoutineData({ day }) {
   Routine.findOne({ where: { day } }).then((routine) => {
-    return routine.destroy();
+    return routine?.destroy();
   });
 }
 export async function getRoutineContentData(day) {
