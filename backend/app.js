@@ -31,5 +31,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port} ${JSON.stringify(process.env.DB_HOST)}${process.env.DB_PASSWORD}`);
+  console.log(`Server is running on port ${JSON.stringify(process.env.DB_PORT)} ${JSON.stringify(process.env.DB_HOST)}${process.env.DB_PASSWORD}`);
 });
