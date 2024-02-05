@@ -35,6 +35,6 @@ package-lock.json
 /backend/node_modules
 /backend/package-lock.json
 /backend/build
-/backend/.env
+# /backend/.env
 /backend/.env.development.local
 /backend/.env.production.local
