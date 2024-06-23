@@ -31,8 +31,8 @@ export function Todo() {
   const id = useId(); //아이디
   const { setPopup } = useReducer(); //팝업 세팅
   const dispatch: Dispatch<AnyAction> = useDispatch();
-  const { getTodoApi, postTodoApi } = useTodoApi();//todo 세팅
-  const { getRoutineApi, postRoutineApi } = useRoutineApi();//루틴 세팅
+  const { getTodoApi, postTodoApi } = useTodoApi(); //todo 세팅
+  const { getRoutineApi, postRoutineApi } = useRoutineApi(); //루틴 세팅
   const [isShowDatePicker, setIsShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
     moment().format(U_DATE_FORMAT)
@@ -50,7 +50,7 @@ export function Todo() {
   const [insertValue, setInsertValue]: [
     string,
     Dispatch<SetStateAction<string>>
-  ] = useState("");//추가 todo
+  ] = useState(""); //추가 todo
   //추가
   const onAddTodoList = useCallback(() => {
     let saveData: PlanType[] = [...planList];
@@ -155,11 +155,11 @@ export function Todo() {
           })
           .filter((v) => v) as PlanType[];
         setRoutinueList((arr) => [...dayRoutine]);
-        arr.push(
-          ...(dayRoutine.map((obj) => {
-            return { ...obj, routineId: obj.contentId };
-          }) as PlanType[])
-        );
+        // arr.push(
+        //   ...(dayRoutine.map((obj) => {
+        //     return { ...obj, routineId: obj.contentId };
+        //   }) as PlanType[])
+        // );
       }
       if (todo) {
         arr.push(...(todo as PlanType[]));
@@ -204,13 +204,16 @@ export function Todo() {
         </div>
       </div>
       <div className="grow">
-        <div className={`w-full h-full relative z-10`}>
+        <div
+          className={`w-full h-full relative z-10`}
+          style={{ overflow: "scroll" }}
+        >
           {isShowDatePicker ? (
             <div
               className={
                 "w-full absolute top-0 bg-[#F0F0F0] overflow-hidden z-10 no_input"
-              }
-            >
+                }
+                >
               <DatePicker
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
@@ -218,15 +221,25 @@ export function Todo() {
                 customInput={<div></div>}
                 onChange={changeDate}
                 onSelect={changeDate}
-              ></DatePicker>
+                ></DatePicker>
             </div>
           ) : (
             <></>
-          )}
+            )}
+          <div className="text-xl">요일별 루틴</div>
+          <DragNDrop
+            contentList={routinueList}
+            // setContentList={setPlanList}
+            cotentClassName={"w-full"}
+            // wrapperClassName={"h-full"}
+            emptyMessage={""}
+            readOnly={true}
+          ></DragNDrop>
+          <div className="text-xl">TodoList</div>
           <DragNDrop
             contentList={planList}
             setContentList={setPlanList}
-            cotentClassName={"w-full h-full"}
+            cotentClassName={"w-full"}
             wrapperClassName={"h-full"}
             emptyMessage={"할일을 추가해주세요"}
           ></DragNDrop>

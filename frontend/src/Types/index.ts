@@ -46,10 +46,11 @@ export interface DragNDropAttrType {
   cotentClassName?: string;
   checkboxReadonly?: boolean;
   contentReadonly?: boolean;
+  readOnly?: boolean;
 }
 export interface DragNDropType extends DragNDropAttrType {
   contentList: DragNDropItemType[];
-  setContentList: any;
+  setContentList?: any;
   emptyMessage?: string;
   wrapperClassName?: string;
 }

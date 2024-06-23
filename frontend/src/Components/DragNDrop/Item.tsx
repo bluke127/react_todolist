@@ -8,17 +8,20 @@ function Item({
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
+  readOnly = false,
 }: { item: DragNDropItemType; setItem: any } & DragNDropAttrType) {
   return (
     <>
-      <CheckBox
-        value={item.contentId ?? ""}
-        readonly={checkboxReadonly}
-        checked={item.checked}
-        onChange={(e) => {
-          setItem((e.target as HTMLInputElement).checked, "checked");
-        }}
-      />
+      {readOnly ? null : (
+        <CheckBox
+          value={item.contentId ?? ""}
+          readonly={checkboxReadonly}
+          checked={item.checked}
+          onChange={(e) => {
+            setItem((e.target as HTMLInputElement).checked, "checked");
+          }}
+        />
+      )}
       <span className="flex grow items-center">
         <StatusInput
           readonly={contentReadonly}

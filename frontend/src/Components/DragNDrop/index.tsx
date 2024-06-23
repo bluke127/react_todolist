@@ -11,6 +11,7 @@ function DragNDrop({
   cotentClassName,
   checkboxReadonly = false,
   contentReadonly = false,
+  readOnly = false,
   emptyMessage = "할일을 추가해주세요",
 }: DragNDropType) {
   type ItemKeyType = keyof Pick<
@@ -38,10 +39,11 @@ function DragNDrop({
     copyListItems.splice(dragOverItem.current as number, 0, dragItemConotent);
     dragItem.current = null;
     dragOverItem.current = null;
-    setContentList(copyListItems);
+    if (!readOnly) setContentList(copyListItems);
   };
   const setContent = useCallback(
     (v: string | boolean, itemKey: ItemKeyType | "delete", idx: number) => {
+      if (readOnly) return;
       if (itemKey !== "delete") {
         setContentList((arr: ItemKeyType[]) => {
           (arr[idx] as any)[itemKey] = v;
@@ -83,13 +85,16 @@ function DragNDrop({
                 }
                 checkboxReadonly={checkboxReadonly}
                 contentReadonly={contentReadonly}
+                readOnly={readOnly}
               />
-              <div className="basis-[5%] md:basis-[10%] sm:basis-[10%] justify-center flex">
-                <MdOutlineDeleteOutline
-                  className="w-3/4 h-fit md:w-full md:h-full sm:w-full sm:h-full"
-                  onClick={() => setContent("_", "delete", index)}
-                />
-              </div>
+              {readOnly ? null : (
+                <div className="basis-[5%] md:basis-[10%] sm:basis-[10%] justify-center flex">
+                  <MdOutlineDeleteOutline
+                    className="w-3/4 h-fit md:w-full md:h-full sm:w-full sm:h-full"
+                    onClick={() => setContent("_", "delete", index)}
+                  />
+                </div>
+              )}
             </li>
           ))
         ) : (

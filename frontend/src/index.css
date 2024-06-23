@@ -22,6 +22,7 @@
 body {
   font-family: "Dovemayo_gothic";
 }
+button{cursor:pointer}
 #popup_root,#modal_root {
   position: fixed;
   top: 0;
