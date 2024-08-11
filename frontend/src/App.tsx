@@ -41,8 +41,10 @@ function App() {
   };
   useEffect(() => {
     redirect("/todo");
-    document.getElementById("root")!.style.height = `${window.innerHeight}px`;
   }, []);
+  useEffect(() => {
+    document.getElementById("root")!.style.height = `${window.innerHeight}px`;
+  }, [window.innerHeight]);
   return (
     <>
       {axiosResult && axiosResult.loading ? (
