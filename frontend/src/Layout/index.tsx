@@ -14,9 +14,6 @@ function index() {
           <Outlet />
         </div>
       </div>
-      <div className="basis-1/8">
-        <Footer></Footer>
-      </div>
     </div>
   );
 }
